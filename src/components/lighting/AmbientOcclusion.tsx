@@ -17,7 +17,7 @@ class ArchitecturalAO extends SSAOPass {
 export function AmbientOcclusion(){
  const {gl,scene,camera,size,viewport}=useThree();
  const pipeline=useMemo(()=>{
-  const target=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:2});
+  const target=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:0});
   const composer=new EffectComposer(gl,target);
   const beauty=new RenderPass(scene,camera),ao=new ArchitecturalAO(scene,camera,256,256,12),output=new OutputPass();
   ao.kernelRadius=.24;ao.minDistance=.0006;ao.maxDistance=.045;

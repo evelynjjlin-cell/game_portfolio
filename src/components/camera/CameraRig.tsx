@@ -16,6 +16,7 @@ export function CameraRig(){
  const flight=useRef<Flight|null>(null),overviewSnapshot=useRef<CameraPose|null>(null),lastRoom=useRef<RoomId|null>(null),lastView=useRef(useWorld.getState().view.key);
  const initialized=useRef(false),pendingInitial=useRef<CameraPose|null>(null),lastSize=useRef({width:size.width,height:size.height}),lastRequest=useRef(request);
  const [moving,setMoving]=useState(false);
+ const fittedOverview=useMemo(()=>overviewPose(size.width,size.height,useWorld.getState().view.name),[size.width,size.height,request]);
  const capture=():CameraPose=>({position:camera.position.clone(),target:controls.current?.target.clone()??WORLD_CENTER.clone(),quaternion:camera.quaternion.clone(),fov:camera.fov,zoom:camera.zoom});
  const apply=(p:CameraPose,exact=false)=>{
   camera.position.copy(p.position);camera.fov=p.fov;camera.zoom=p.zoom;camera.quaternion.copy(p.quaternion);camera.updateProjectionMatrix();
