@@ -1,0 +1,56 @@
+{
+  "kind": "music",
+  "file": "music.glb",
+  "bytes": 1285996,
+  "triangles": 72532,
+  "drawMeshes": 20,
+  "lights": [
+    {
+      "position": [
+        0.77,
+        2.02,
+        -0.72
+      ],
+      "color": "#ffd09c",
+      "intensity": 2.3,
+      "distance": 4,
+      "name": "Opal music globe"
+    },
+    {
+      "position": [
+        0.1,
+        1.76,
+        -1.82
+      ],
+      "color": "#ffe1ad",
+      "intensity": 1.1,
+      "distance": 2.7,
+      "name": "Piano score lamp"
+    }
+  ],
+  "dynamicNodes": [
+    "RecordPlatter"
+  ],
+  "width": 2.9,
+  "depth": 2.6,
+  "height": 2.7,
+  "origin": "floor center at entrance, +Y up, interior toward -Z",
+  "drawPrimitives": 22,
+  "bounds": {
+    "min": [
+      -1.5199999809265137,
+      -0.05000000074505806,
+      -2.6699999906122684
+    ],
+    "max": [
+      1.5199999809265137,
+      2.769999861717224,
+      0
+    ]
+  },
+  "dynamicAxes": {
+    "RecordPlatter": "y"
+  },
+  "sha256": "9adf9cc3371f1f7df713d6757dbe1cbd051f844306a7b30e2f7dd07ff8a8167d",
+  "deliveryCompression": "EXT_meshopt_compression"
+}

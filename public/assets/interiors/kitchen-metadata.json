@@ -1,0 +1,51 @@
+{
+  "kind": "kitchen",
+  "file": "kitchen.glb",
+  "bytes": 1712672,
+  "triangles": 103756,
+  "drawMeshes": 19,
+  "lights": [
+    {
+      "position": [
+        -0.2,
+        2.17,
+        -1.15
+      ],
+      "color": "#ffe4ba",
+      "intensity": 3,
+      "distance": 4.6,
+      "name": "Kitchen ceramic pendant bulb"
+    },
+    {
+      "position": [
+        0,
+        1.65,
+        -2.25
+      ],
+      "color": "#ffefcd",
+      "intensity": 1.1,
+      "distance": 2.3,
+      "name": "Undershelf task strip"
+    }
+  ],
+  "dynamicNodes": [],
+  "width": 2.9,
+  "depth": 2.65,
+  "height": 2.7,
+  "origin": "floor center at entrance, +Y up, interior toward -Z",
+  "drawPrimitives": 19,
+  "bounds": {
+    "min": [
+      -1.5199999809265137,
+      -0.05000000074505806,
+      -2.7199999429285526
+    ],
+    "max": [
+      1.5199999809265137,
+      2.769999861717224,
+      0
+    ]
+  },
+  "sha256": "b1aa6c39807d56c9a2ad8c86d1524e1acc1d6169bab6103e24ecc24a3804686a",
+  "deliveryCompression": "EXT_meshopt_compression"
+}

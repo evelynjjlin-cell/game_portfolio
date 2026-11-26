@@ -1,0 +1,27 @@
+{
+  "file": "sunroom.glb",
+  "bytes": 2176556,
+  "triangles": 147934,
+  "lights": [
+    {
+      "name": "Sunroom daylight fill",
+      "position": [
+        0,
+        2.15,
+        -0.8
+      ],
+      "color": "#fff2d8",
+      "intensity": 2.8
+    }
+  ],
+  "width": 2.7,
+  "depth": 2.45,
+  "height": 2.5,
+  "origin": "floor center at entrance, +Y up, interior toward -Z",
+  "staticMeshCount": 15,
+  "drawCalls": 15,
+  "emissiveMaterials": [],
+  "inspectionImage": "../v03-interior-review/sunroom.png",
+  "sha256": "965390698a46c1020eab81eb333d20267ba54798a46c54d3e023462530aa453a",
+  "deliveryCompression": "EXT_meshopt_compression"
+}

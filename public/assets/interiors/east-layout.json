@@ -1,0 +1,138 @@
+[
+  {
+    "kind": "art",
+    "file": "/assets/interiors/art.glb",
+    "bytes": 2442368,
+    "triangles": 64458,
+    "drawMeshes": 17,
+    "lights": [
+      {
+        "position": [
+          0.15,
+          2.17,
+          -1.5
+        ],
+        "color": "#ffe6c3",
+        "intensity": 3.0,
+        "distance": 4.8,
+        "name": "Studio enamel pendant bulb"
+      },
+      {
+        "position": [
+          -1.15565,
+          1.51764,
+          -2.35869
+        ],
+        "color": "#ffedce",
+        "intensity": 0.8,
+        "distance": 2.3,
+        "name": "Articulated studio task lamp"
+      }
+    ],
+    "dynamicNodes": [],
+    "drawPrimitives": 17
+  },
+  {
+    "kind": "kitchen",
+    "file": "/assets/interiors/kitchen.glb",
+    "bytes": 3703180,
+    "triangles": 103756,
+    "drawMeshes": 19,
+    "lights": [
+      {
+        "position": [
+          -0.2,
+          2.17,
+          -1.15
+        ],
+        "color": "#ffe4ba",
+        "intensity": 3.0,
+        "distance": 4.6,
+        "name": "Kitchen ceramic pendant bulb"
+      },
+      {
+        "position": [
+          0,
+          1.65,
+          -2.25
+        ],
+        "color": "#ffefcd",
+        "intensity": 1.1,
+        "distance": 2.3,
+        "name": "Undershelf task strip"
+      }
+    ],
+    "dynamicNodes": [],
+    "drawPrimitives": 19
+  },
+  {
+    "kind": "music",
+    "file": "/assets/interiors/music.glb",
+    "bytes": 2675196,
+    "triangles": 72532,
+    "drawMeshes": 20,
+    "lights": [
+      {
+        "position": [
+          0.77,
+          2.02,
+          -0.72
+        ],
+        "color": "#ffd09c",
+        "intensity": 2.3,
+        "distance": 4.0,
+        "name": "Opal music globe"
+      },
+      {
+        "position": [
+          0.1,
+          1.76,
+          -1.82
+        ],
+        "color": "#ffe1ad",
+        "intensity": 1.1,
+        "distance": 2.7,
+        "name": "Piano score lamp"
+      }
+    ],
+    "dynamicNodes": [
+      "RecordPlatter"
+    ],
+    "drawPrimitives": 22
+  },
+  {
+    "kind": "workshop",
+    "file": "/assets/interiors/workshop.glb",
+    "bytes": 3846764,
+    "triangles": 89221,
+    "drawMeshes": 20,
+    "lights": [
+      {
+        "position": [
+          -0.4,
+          2.2,
+          -1.05
+        ],
+        "color": "#e5eff0",
+        "intensity": 2.7,
+        "distance": 4.3,
+        "name": "Workshop enamel pendant bulb"
+      },
+      {
+        "position": [
+          1.10074,
+          1.49279,
+          -2.38214
+        ],
+        "color": "#ffe4b4",
+        "intensity": 1.5,
+        "distance": 2.4,
+        "name": "Articulated workbench task lamp"
+      }
+    ],
+    "dynamicNodes": [
+      "WorkshopGear"
+    ],
+    "drawPrimitives": 20
+  }
+]

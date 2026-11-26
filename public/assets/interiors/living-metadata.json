@@ -1,0 +1,41 @@
+{
+  "file": "living.glb",
+  "bytes": 1096284,
+  "triangles": 53111,
+  "lights": [
+    {
+      "name": "Living floor lamp bulb",
+      "position": [
+        -1.39,
+        1.31,
+        -1.13
+      ],
+      "color": "#ffe2b0",
+      "intensity": 2.2
+    },
+    {
+      "name": "Living fireplace embers",
+      "position": [
+        1.12,
+        0.58,
+        -1.87
+      ],
+      "color": "#ff9c42",
+      "intensity": 1.6
+    }
+  ],
+  "width": 3.2,
+  "depth": 2.65,
+  "height": 2.7,
+  "origin": "floor center at entrance, +Y up, interior toward -Z",
+  "staticMeshCount": 24,
+  "drawCalls": 25,
+  "emissiveMaterials": [
+    "emissive_Flame",
+    "emissive_Flame core",
+    "emissive_Lamp glow"
+  ],
+  "inspectionImage": "../v03-interior-review/living.png",
+  "sha256": "2f3f6f35f85d1e79994cce6f75c15e40ef75329bc75b78ebeb78c1b15cd2c09d",
+  "deliveryCompression": "EXT_meshopt_compression"
+}

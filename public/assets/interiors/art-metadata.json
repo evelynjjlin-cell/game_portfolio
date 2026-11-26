@@ -1,0 +1,51 @@
+{
+  "kind": "art",
+  "file": "art.glb",
+  "bytes": 1181572,
+  "triangles": 64458,
+  "drawMeshes": 17,
+  "lights": [
+    {
+      "position": [
+        0.15,
+        2.17,
+        -1.5
+      ],
+      "color": "#ffe6c3",
+      "intensity": 3,
+      "distance": 4.8,
+      "name": "Studio enamel pendant bulb"
+    },
+    {
+      "position": [
+        -1.15565,
+        1.51764,
+        -2.35869
+      ],
+      "color": "#ffedce",
+      "intensity": 0.8,
+      "distance": 2.3,
+      "name": "Articulated studio task lamp"
+    }
+  ],
+  "dynamicNodes": [],
+  "width": 3.2,
+  "depth": 2.6,
+  "height": 2.7,
+  "origin": "floor center at entrance, +Y up, interior toward -Z",
+  "drawPrimitives": 17,
+  "bounds": {
+    "min": [
+      -1.6699999570846558,
+      -0.05000000074505806,
+      -2.6699999906122684
+    ],
+    "max": [
+      1.6699999570846558,
+      2.769999861717224,
+      0
+    ]
+  },
+  "sha256": "e8f63e9275d60c07e81b281436a4bf078138acfb4c54113ba43fdfbda1f30575",
+  "deliveryCompression": "EXT_meshopt_compression"
+}

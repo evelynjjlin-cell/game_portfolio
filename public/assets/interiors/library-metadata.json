@@ -1,0 +1,29 @@
+{
+  "file": "library.glb",
+  "bytes": 3210036,
+  "triangles": 141600,
+  "lights": [
+    {
+      "name": "Library reading lamp bulb",
+      "position": [
+        0.91,
+        1.02,
+        -0.91
+      ],
+      "color": "#ffcd87",
+      "intensity": 2
+    }
+  ],
+  "width": 2.8,
+  "depth": 2.6,
+  "height": 2.7,
+  "origin": "floor center at entrance, +Y up, interior toward -Z",
+  "staticMeshCount": 21,
+  "drawCalls": 21,
+  "emissiveMaterials": [
+    "emissive_Lamp glow.001"
+  ],
+  "inspectionImage": "../v03-interior-review/library.png",
+  "sha256": "e53c1cc39d31754473863684d570bb2dcf91e687394f1036a29d5dc3e166c869",
+  "deliveryCompression": "EXT_meshopt_compression"
+}
