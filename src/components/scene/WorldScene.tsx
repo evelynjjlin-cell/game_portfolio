@@ -1,5 +1,14 @@
+import { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { ContactShadows } from '@react-three/drei';
-import { CameraRig } from '../camera/CameraRig';
+import { ContactShadows, PerformanceMonitor } from '@react-three/drei';
 import { House } from '../house/House';
-export default function WorldScene(){return <Canvas shadows dpr={[1,1.5]} camera={{position:[11,9,16],fov:38,near:.1,far:100}} gl={{antialias:true,alpha:true}}><ambientLight intensity={.8}/><hemisphereLight args={['#e6edf0','#c3aa84',1.1]}/><directionalLight castShadow position={[-5,12,8]} intensity={3.5} color="#fff1d6" shadow-mapSize={[2048,2048]} shadow-camera-left={-10} shadow-camera-right={10} shadow-camera-top={12} shadow-camera-bottom={-8} shadow-normalBias={.04}/><directionalLight position={[8,6,-8]} intensity={1.1} color="#dbe6ed"/><House/><ContactShadows position={[0,-.03,0]} opacity={.35} scale={28} blur={2.5} far={12} resolution={512} frames={1}/><CameraRig/></Canvas>;}
+import { CameraRig } from '../camera/CameraRig';
+import { SceneLighting } from '../lighting/SceneLighting';
+import { useWorld } from '../../hooks/useWorld';
+export default function WorldScene(){
+ const [dpr,setDpr]=useState(Math.min(window.devicePixelRatio,1.5));const hint=useWorld(s=>s.hint);
+ return <Canvas style={{cursor:hint?'pointer':'grab'}} shadows dpr={dpr} camera={{position:[10.6,9,16.4],fov:38,near:.1,far:120}} gl={{antialias:true,alpha:true,powerPreference:'high-performance'}} fallback={<div className="scene-fallback"><h2>This device cannot display the 3D house.</h2><p>About and Contact are still available above.</p></div>}>
+ <PerformanceMonitor onDecline={()=>setDpr(1)} onIncline={()=>setDpr(Math.min(window.devicePixelRatio,1.5))} flipflops={2} onFallback={()=>setDpr(1)}/>
+ <SceneLighting/><House/><ContactShadows position={[0,-.04,0]} opacity={.37} scale={27} blur={2.6} far={12} resolution={512} frames={1} color="#2f3b29"/><CameraRig/>
+ </Canvas>;
+}
