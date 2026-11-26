@@ -1,25 +1,25 @@
-# V0.1 verification — 26 November 2026
+# V0.2 verification — 26 November 2026
 
-## Implemented and observed
+## Implementation and checks
 
-- Real-time Three.js geometry, curved and layered hardcover book, complete front/rear façades, coherent side walls, eight furnished interiors, roof/dormers/attic.
-- Front/back navigation and manual side rotation work. A rear room opens and closes to the prior rear viewpoint. A front room opens to its own furnished interior.
-- Actual hinged glass doors and shutters visibly rotate from their edge pivots; no empty project dialog appears.
-- Daylight/evening changes actual scene lighting; the theme remains readable.
-- Contact opens both from the header and the physical mailbox. Correct mailto, LinkedIn, and UX portfolio URLs were inspected. Copy email produces the Copied status. No email was sent.
-- The real 3D scene renders at a 390 × 844 viewport with readable navigation and no horizontal page overflow in the observed layout.
-- WebGL-unavailable fallback was observed in the cloud browser; About and Contact remain available.
-- `npm run build` compiles the production bundle. `npm run check:state` checks interrupted room transitions, rapid reversal, hover isolation, camera-view reset state, and eight unassigned project slots.
+- Original asymmetric three-wing shell; glass conservatory, furnished balcony, arched entrance, layered slate roofs, side gable, copper details and weather vane.
+- Four independently selectable rooms on each facade; no case studies assigned. Interior dimensions, arched profiles and edge pivots are data-driven.
+- CC0 modular plants, carved armchairs, wooden tables and lanterns are normalized and reused. All source/creator/license/adaptation details are in ASSET_CREDITS.md.
+- Book uses curved closed page blocks, 60 visible paper strata, a clothbound cover, sewn headbands, curved spine and brass corners.
+- `npm run build` passes. `npm run check:state` passes for interrupted transitions, rapid reversal, hover isolation, camera reset and eight empty project slots.
+- All 16 arched leaf geometries were checked for finite vertices. Optimized model blobs were checked against the pushed Git tree.
+- Front/rear shortcuts, rear-room opening and Contact were observed in the actual 3D renderer. The upper sill and porch roof were adjusted after visual inspection to clear the opening.
+- Published navigation lists all eight updated rooms. Public email, LinkedIn and portfolio destinations were inspected; Copy email reports successful copying. No message was sent.
+- Repeated roof/book geometry now uses 108 triangles per small rounded instance instead of 300. Indoor lanterns share their room's physical light; glow and room illumination respond to state and lamp toggles.
 
 ## Capture method
 
-Actual running implementation screenshots were captured using Chromium with software WebGL on the development machine, from the pushed source. These are not image-generated concepts. Captures cover front, rear, side, opened front/rear rooms, evening, contact, and a 390 × 844 viewport. They are delivered separately to avoid adding bulky review images to the source repository.
+Actual running implementation captures use local Chromium with software WebGL, from pushed source. They are not concept art. Vercel build metadata identifies the corresponding source commit, and the deployed HTML/UI were separately checked in the cloud browser. That browser does not provide WebGL; the native test browser has a certificate-trust limitation for the public URL, so its 3D captures use the local development server without bypassing certificate warnings.
 
-## Limits
+## Practical limits
 
-- No approved concept image was attached; visual direction follows the detailed written brief.
-- Physical iPhone/Android touch and Safari rendering/performance have not been tested. The mobile capture is a resized desktop browser, not a physical handset.
-- Software rendering is slower than GPU hardware and cannot substantiate a mobile frame-rate claim. Resolution adapts automatically; hardware benchmarking remains outstanding.
-- Decorative lamp/record/plant/attic behaviors are implemented, but have not all been individually timed or exercised on physical devices.
-- No real project content, sound, résumé, account, or backend has been introduced. All project fields remain empty.
-- The initial Vercel creation labeled its first deployment Production despite the requested target. Subsequent deployments omit that target and are Preview (`target: null`). Main remains the original README commit; no custom domain or DNS was changed. Do not use the old production alias for review; use the final preview URL delivered with the task.
+- The supplied front concept guided the composition; no separate rear reference was attached. The rear is an original complementary arrangement.
+- This is a real-time web interpretation, not a pixel-identical rendering of the concept image. No baked global illumination or SSAO postprocess is included; contact and directional shadows plus a small environment map provide the current shading.
+- Actual iOS/Android touch, Safari rendering, hardware frame rates and low-end GPU profiling remain untested. Software WebGL is slow and is not evidence of mobile performance.
+- Four professional modular models are included. Doors, windows, built-in shelving and architectural ornament remain custom geometry to preserve the required hinge dimensions and interaction system.
+- Main and the original implementation branch remain separate. V0.2 deployments are Preview (`target: null`); no custom domain or DNS was changed. Use the preview URL delivered with this revision rather than the old production alias.
