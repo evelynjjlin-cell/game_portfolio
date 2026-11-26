@@ -1,0 +1,7 @@
+import { useEffect, useRef, type ReactNode } from 'react';
+import { X } from 'lucide-react';
+export function Dialog({title,close,children}:{title:string;close:()=>void;children:ReactNode}){
+  const ref=useRef<HTMLDivElement>(null);
+  useEffect(()=>{const previous=document.activeElement as HTMLElement;const first=ref.current?.querySelector<HTMLElement>('button,a');first?.focus();const handler=(event:KeyboardEvent)=>{if(event.key==='Escape'){event.preventDefault();close();}if(event.key==='Tab'){const items=Array.from(ref.current?.querySelectorAll<HTMLElement>('button,a,input,[tabindex="0"]')??[]);const first=items[0],last=items.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}}};document.addEventListener('keydown',handler);return()=>{document.removeEventListener('keydown',handler);previous?.focus();};},[close]);
+  return <div className="dialog-shade" onPointerDown={e=>{if(e.target===e.currentTarget)close();}}><div ref={ref} role="dialog" aria-modal="true" aria-labelledby="dialog-title" className="paper-dialog"><button aria-label="Close dialog" className="icon-button close-dialog" onClick={close}><X size={20}/></button><span className="paper-rule"/><p className="eyebrow">A NOTE FROM EVELYN</p><h1 id="dialog-title">{title}</h1>{children}<span className="paper-signature" aria-hidden="true">Evelyn</span></div></div>;
+}
