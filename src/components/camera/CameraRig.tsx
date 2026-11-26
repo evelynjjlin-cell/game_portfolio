@@ -14,12 +14,12 @@ export function CameraRig(){
  const scale=Math.max(1,Math.min(2.05,1.22/(size.width/size.height)));
  const pose=():Pose=>({position:camera.position.clone(),target:controls.current?.target.clone()??center.clone()});
  const go=(to:Pose)=>{if(controls.current){controls.current.autoRotate=false;controls.current.enableDamping=false;controls.current.update();}flight.current={from:pose(),to,t:0};};
- useEffect(()=>{const to={position:new THREE.Vector3(10.6,9,16.4).sub(center).multiplyScalar(scale).add(center),target:center.clone()};if(!initialized.current){camera.position.copy(to.position);controls.current?.target.copy(to.target);controls.current?.update();initialized.current=true;}else if(!active)go(to);},[scale]);
+ useEffect(()=>{const to={position:new THREE.Vector3(9.5,8.1,19.5).sub(center).multiplyScalar(scale).add(center),target:center.clone()};if(!initialized.current){camera.position.copy(to.position);controls.current?.target.copy(to.target);controls.current?.update();initialized.current=true;}else if(!active)go(to);},[scale]);
  useEffect(()=>{
   if(active){if(!previous.current)previous.current=pose();const room=roomById[active];const target=new THREE.Vector3(...room.camera.target);const position=new THREE.Vector3(...room.camera.position).sub(target).multiplyScalar(scale).add(target);go({position,target});}
   else if(previous.current){go(previous.current);previous.current=null;}
  },[active]);
- useEffect(()=>{if(view.key===lastView.current)return;lastView.current=view.key;previous.current=null;const position=view.name==='front'?new THREE.Vector3(7.4,8.6,18):view.name==='back'?new THREE.Vector3(-9.7,9,-17):new THREE.Vector3(10.6,9,16.4);go({position:position.sub(center).multiplyScalar(scale).add(center),target:center.clone()});},[view]);
+ useEffect(()=>{if(view.key===lastView.current)return;lastView.current=view.key;previous.current=null;const position=view.name==='front'?new THREE.Vector3(5.6,7.8,20.5):view.name==='back'?new THREE.Vector3(-6.5,8,-20):new THREE.Vector3(9.5,8.1,19.5);go({position:position.sub(center).multiplyScalar(scale).add(center),target:center.clone()});},[view]);
  useFrame((_,dt)=>{
   const f=flight.current,c=controls.current;if(!c)return;c.dampingFactor=1-Math.exp(-5*dt);if(!f)return;
   f.t=reduced?1:Math.min(1,f.t+dt/1.15);const t=f.t*f.t*(3-2*f.t);

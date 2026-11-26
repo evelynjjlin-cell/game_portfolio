@@ -1,0 +1,54 @@
+[
+  {
+    "id": "potted-plant",
+    "source_id": "potted_plant_02",
+    "bytes": 888260,
+    "triangles": 21338,
+    "meshes": 3,
+    "normalized_size": [
+      0.8331,
+      1,
+      0.7809
+    ],
+    "texture_max_dimension": 512
+  },
+  {
+    "id": "carved-armchair",
+    "source_id": "ArmChair_01",
+    "bytes": 297228,
+    "triangles": 5626,
+    "meshes": 1,
+    "normalized_size": [
+      0.7966,
+      1,
+      0.719
+    ],
+    "texture_max_dimension": 512
+  },
+  {
+    "id": "oak-side-table",
+    "source_id": "small_wooden_table_01",
+    "bytes": 172080,
+    "triangles": 3410,
+    "meshes": 1,
+    "normalized_size": [
+      1.7186,
+      1,
+      0.8253
+    ],
+    "texture_max_dimension": 512
+  },
+  {
+    "id": "wooden-lantern",
+    "source_id": "wooden_lantern_01",
+    "bytes": 490604,
+    "triangles": 8321,
+    "meshes": 3,
+    "normalized_size": [
+      0.417,
+      1,
+      0.4428
+    ],
+    "texture_max_dimension": 512
+  }
+]

@@ -1,30 +1,54 @@
 import * as THREE from 'three';
-/** Seeded, tiny local surface maps: no network assets or runtime image services. */
-function surface(kind:'paper'|'plaster'|'wood'|'cloth'){
- const size=128,data=new Uint8Array(size*size*4);let seed=22;
- for(let y=0;y<size;y++)for(let x=0;x<size;x++){seed=(seed*16807)%2147483647;const noise=seed/2147483647;const weave=kind==='cloth'?((x%3===0?-.1:0)+(y%3===0?-.08:0)):kind==='wood'?Math.sin(x*.65+Math.sin(y*.03)*2)*.05:0;const v=Math.round(244+noise*10+weave*35);const i=(y*size+x)*4;data[i]=data[i+1]=data[i+2]=v;data[i+3]=255;}
- const map=new THREE.DataTexture(data,size,size);map.wrapS=map.wrapT=THREE.RepeatWrapping;map.repeat.set(kind==='wood'?2:4,kind==='wood'?1:4);map.magFilter=THREE.LinearFilter;map.minFilter=THREE.LinearMipmapLinearFilter;map.generateMipmaps=true;map.needsUpdate=true;map.colorSpace=THREE.SRGBColorSpace;return map;
+
+/** Small, self-hosted derivatives of CC0 Poly Haven scans (see ASSET_CREDITS.md).
+ * Color maps are gently neutralized so all architecture shares a controlled palette.
+ * Normal and roughness maps remain linear data; albedo is explicitly sRGB.
+ */
+function texture(file:string,repeat:[number,number]=[1,1],color=false){
+ const map = typeof document==='undefined' ? new THREE.Texture() : new THREE.TextureLoader().load(`/assets/textures/${file}.jpg`);
+ map.wrapS=map.wrapT=THREE.RepeatWrapping;
+ map.repeat.set(...repeat);
+ map.anisotropy=4;
+ map.colorSpace=color?THREE.SRGBColorSpace:THREE.NoColorSpace;
+ map.magFilter=THREE.LinearFilter;
+ map.minFilter=THREE.LinearMipmapLinearFilter;
+ return map;
 }
-const plaster=surface('plaster'),paper=surface('paper'),wood=surface('wood'),cloth=surface('cloth');
+function surface(name:string,repeat:[number,number]=[1,1],strength=.14){
+ return {
+  map:texture(`${name}-color`,repeat,true),
+  normalMap:texture(`${name}-normal`,repeat),
+  normalScale:new THREE.Vector2(strength,strength),
+  roughnessMap:texture(`${name}-roughness`,repeat),
+ };
+}
+const plaster=surface('plaster',[2,2],.1);
+const wood=surface('oak',[1,1],.12);
+// A single slate face was cropped from the scan: no miniature tiled-roof pattern on every tile.
+const slate=surface('slate',[1,1],.22);
+const stone=surface('stone',[1,1],.17);
+const cloth=surface('bookcloth',[2,2],.1);
+const paper=texture('paper-color',[2,2],true);
+
 export const materials={
- plaster:new THREE.MeshStandardMaterial({color:'#e9dec7',map:plaster,roughness:.92}),
- trim:new THREE.MeshStandardMaterial({color:'#f4e9d2',roughness:.75}),
- stone:new THREE.MeshStandardMaterial({color:'#c5bcaa',roughness:.95}),
- wood:new THREE.MeshStandardMaterial({color:'#9a6945',map:wood,roughness:.7}),
- darkWood:new THREE.MeshStandardMaterial({color:'#694933',map:wood,roughness:.77}),
- lightWood:new THREE.MeshStandardMaterial({color:'#c49b69',map:wood,roughness:.7}),
- roof:new THREE.MeshStandardMaterial({color:'#284b40',map:cloth,roughness:.85}),
- roofEdge:new THREE.MeshStandardMaterial({color:'#203f35',roughness:.7}),
- sage:new THREE.MeshStandardMaterial({color:'#8a9c7b',roughness:.92}),
- leaf:new THREE.MeshStandardMaterial({color:'#4e6947',roughness:.9}),
- terracotta:new THREE.MeshStandardMaterial({color:'#ab7258',roughness:1}),
- brass:new THREE.MeshStandardMaterial({color:'#bc9654',metalness:.65,roughness:.35}),
- paper:new THREE.MeshStandardMaterial({color:'#eee2c6',map:paper,roughness:1,side:THREE.DoubleSide}),
- pageEdge:new THREE.MeshStandardMaterial({color:'#c9bda0',roughness:1}),
- cover:new THREE.MeshStandardMaterial({color:'#4f6961',map:cloth,roughness:1}),
- cream:new THREE.MeshStandardMaterial({color:'#eee0c2',roughness:.95}),
- fabric:new THREE.MeshStandardMaterial({color:'#a5ad91',map:cloth,roughness:1}),
- ink:new THREE.MeshStandardMaterial({color:'#303e36',roughness:.65}),
- glass:new THREE.MeshStandardMaterial({color:'#b2c5ac',transparent:true,opacity:.22,roughness:.18,metalness:.08,depthWrite:false}),
+ plaster:new THREE.MeshStandardMaterial({color:'#eee3ce',...plaster,roughness:1}),
+ trim:new THREE.MeshStandardMaterial({color:'#f1e7d1',...stone,roughness:.96}),
+ stone:new THREE.MeshStandardMaterial({color:'#d3c5ab',...stone,roughness:1}),
+ wood:new THREE.MeshStandardMaterial({color:'#a77c52',...wood,roughness:.86}),
+ darkWood:new THREE.MeshStandardMaterial({color:'#704d33',...wood,roughness:.92}),
+ lightWood:new THREE.MeshStandardMaterial({color:'#c8a477',...wood,roughness:.88}),
+ roof:new THREE.MeshStandardMaterial({color:'#405a42',...slate,roughness:.94}),
+ roofEdge:new THREE.MeshStandardMaterial({color:'#2d4334',...slate,roughness:.94}),
+ sage:new THREE.MeshStandardMaterial({color:'#829471',...wood,roughness:.95}),
+ leaf:new THREE.MeshStandardMaterial({color:'#526b45',roughness:.95}),
+ terracotta:new THREE.MeshStandardMaterial({color:'#ad795d',...plaster,roughness:1}),
+ brass:new THREE.MeshStandardMaterial({color:'#b49a62',metalness:.76,roughness:.42}),
+ paper:new THREE.MeshStandardMaterial({color:'#f5e8cd',map:paper,roughness:1,side:THREE.DoubleSide}),
+ pageEdge:new THREE.MeshStandardMaterial({color:'#cfc0a2',map:paper,roughness:1}),
+ cover:new THREE.MeshStandardMaterial({color:'#304d40',...cloth,roughness:.96}),
+ cream:new THREE.MeshStandardMaterial({color:'#eee0c7',...cloth,roughness:1}),
+ fabric:new THREE.MeshStandardMaterial({color:'#a3aa8b',...cloth,roughness:1}),
+ ink:new THREE.MeshStandardMaterial({color:'#303e36',roughness:.8}),
+ glass:new THREE.MeshStandardMaterial({color:'#d5ded5',transparent:true,opacity:.15,roughness:.13,metalness:.12,depthWrite:false}),
 };
 export const colored=(color:string)=>new THREE.MeshStandardMaterial({color,roughness:.88});
