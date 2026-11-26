@@ -183,7 +183,7 @@ def slate_polygon(poly,height,variant):
  if len(poly)<3:return
  # Build a closed thin piece with the slate surface elevated above the continuous deck.
  n=len(poly);cx=sum(x for x,z in poly)/n;cz=sum(z for x,z in poly)/n;cy=height(cx,cz)
- verts=[(x-cx,height(x,z)+offset-cy,z-cz) for offset in [.045,.092] for x,z in poly]
+ verts=[(x-cx,height(x,z)+offset-cy,z-cz) for offset in [.085,.132] for x,z in poly]
  key=(variant,tuple(round(value,5) for vertex in verts for value in vertex))
  if key in slate_cache:
   ob=bpy.data.objects.new('Cut beveled slate',slate_cache[key]);bpy.context.collection.objects.link(ob);ob.location=V((cx,cy,cz));return
@@ -209,7 +209,7 @@ for side in [-1,1]:
        part=clip_polygon(part,lambda p:main_y(p[1])-gable_y(p[0],c,hw,peak))
        if len(part)>2:cut.append(part)
      polys=cut
-   for poly in polys:slate_polygon(poly,lambda x,z:main_y(z),(col*7+row*3)%5)
+   for poly in polys:slate_polygon(poly,lambda xx,zz,zc=z,sgn=side:main_y(zz)+.25*sgn*(zz-zc),(col*7+row*3)%5)
 for c,hw,peak in GABLES:
  slope=(peak-6.42)/hw;ang=math.atan(slope);rows=math.ceil(hw/.29);cols=11;dz=D/cols
  for side in [-1,1]:
@@ -220,7 +220,7 @@ for c,hw,peak in GABLES:
     poly=[(x-w,z-d),(x+w,z-d),(x+w,z+d),(x-w,z+d)]
     poly=clip_polygon(poly,lambda p:hw-abs(p[0]-c))
     poly=clip_polygon(poly,lambda p:gable_y(p[0],c,hw,peak)-main_y(p[1]))
-    if len(poly)>2:slate_polygon(poly,lambda xx,zz:gable_y(xx,c,hw,peak),(row*3+col*7)%5)
+    if len(poly)>2:slate_polygon(poly,lambda xx,zz,xc=x,sgn=side:gable_y(xx,c,hw,peak)+.25*sgn*(xx-xc),(row*3+col*7)%5)
  # Valley flashings form exact straight junctions between the pitched roof fields.
  zstart=max(0,(RIDGE-peak)/K)
  for side in [-1,1]:

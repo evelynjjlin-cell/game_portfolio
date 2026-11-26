@@ -31,7 +31,18 @@ export function overviewPose(width:number,height:number,view:View='reset'):Camer
  const dir=(view==='front'?new THREE.Vector3(.19,.2,1):view==='back'?new THREE.Vector3(-.25,.22,-1):new THREE.Vector3(.38,.25,1)).normalize();
  const right=new THREE.Vector3().crossVectors(UP,dir).normalize(),up=new THREE.Vector3().crossVectors(dir,right).normalize();
  const rect=frameRect(width,height),shiftY=(rect.top+rect.bottom)/2,fov=37,tan=Math.tan(THREE.MathUtils.degToRad(fov/2));
- const poseAt=(distance:number)=>{const target=WORLD_CENTER.clone().addScaledVector(up,-shiftY*distance*tan);return makePose(target.clone().addScaledVector(dir,distance),target,fov);};
+ const poseAt=(distance:number)=>{
+  const target=WORLD_CENTER.clone();let pose=makePose(target.clone().addScaledVector(dir,distance),target,fov);
+  // Perspective makes a box's projected extent asymmetric. Center its actual screen bounds
+  // before fitting distance, otherwise one edge fits while the opposite side wastes space.
+  for(let i=0;i<10;i++){
+   const b=projectedBounds(pose,width,height);
+   target.addScaledVector(right,((b.left+b.right)/2)*distance*tan*(width/height));
+   target.addScaledVector(up,((b.bottom+b.top)/2-shiftY)*distance*tan);
+   pose=makePose(target.clone().addScaledVector(dir,distance),target.clone(),fov);
+  }
+  return pose;
+ };
  const points=boxCorners(WORLD_BOUNDS);let lo=SAFE_RADIUS,hi=160;
  for(let i=0;i<45;i++){const mid=(lo+hi)/2;if(fits(poseAt(mid),width,height,points,rect))hi=mid;else lo=mid;}
  return poseAt(hi+.015);
