@@ -12,11 +12,11 @@ export type RoomConfig = {
 const placements = [
  {facade:'front',position:[-3,1.94,3.0],width:2.45,height:2.3,arch:.75,style:'greenhouse',label:'Glasshouse studio',furniture:'atelier'},
  {facade:'front',position:[3.1,1.94,2.16],width:2.45,height:2.3,arch:.9,style:'french',label:'Front reading room',furniture:'reading'},
- {facade:'front',position:[-3,4.13,2.05],width:2.25,height:2.1,arch:.88,style:'french',label:'Upper library',furniture:'music'},
+ {facade:'front',position:[-3,4.38,2.05],width:2.25,height:2.1,arch:.88,style:'french',label:'Upper library',furniture:'music'},
  {facade:'front',position:[.15,4.77,2.4],width:2.45,height:2.4,arch:1.05,style:'shutter',label:'Gabled drawing studio',furniture:'study'},
  {facade:'back',position:[-3,1.94,-2.24],width:2.35,height:2.3,arch:.8,style:'shutter',label:'Rear music room',furniture:'music'},
  {facade:'back',position:[3.1,1.94,-2.18],width:2.45,height:2.3,arch:.9,style:'french',label:'Garden workshop',furniture:'atelier'},
- {facade:'back',position:[-3,4.13,-2.24],width:2.25,height:2.1,arch:.88,style:'french',label:'Rear reading loft',furniture:'reading'},
+ {facade:'back',position:[-3,4.38,-2.24],width:2.25,height:2.1,arch:.88,style:'french',label:'Rear reading loft',furniture:'reading'},
  {facade:'back',position:[.15,4.77,-2.4],width:2.45,height:2.4,arch:1.05,style:'shutter',label:'Rear drawing studio',furniture:'study'},
 ] as const;
 export const rooms:RoomConfig[]=placements.map((p,i)=>{

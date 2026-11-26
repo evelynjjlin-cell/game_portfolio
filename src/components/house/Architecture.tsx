@@ -13,9 +13,9 @@ function Wall({x,z,w,eave,rise=0,back=false,openings=[]}:{x:number;z:number;w:nu
  return new THREE.ExtrudeGeometry(s,{depth:.18,bevelEnabled:true,bevelSegments:1,steps:1,bevelSize:.015,bevelThickness:.015,curveSegments:24});},[x,w,eave,rise,back,JSON.stringify(openings)]);
  return <mesh position={[x,0,z]} rotation={[0,back?Math.PI:0,0]} geometry={g} material={materials.plaster} castShadow receiveShadow/>;
 }
-function FixedArch({position,width=1.8,height=1.6}:{position:[number,number,number];width?:number;height?:number}){
+function FixedArch({position,width=1.8,height=1.6,recess=false}:{position:[number,number,number];width?:number;height?:number;recess?:boolean}){
  const geometry=useMemo(()=>new THREE.ShapeGeometry(archShape(width,height,width*.47),32),[width,height]);
- return <group position={position}><mesh geometry={geometry} material={materials.darkWood} position={[0,0,-1.42]}/><mesh geometry={geometry} scale={[.92,.94,1]} position={[0,0,.015]} material={materials.glass}/>
+ return <group position={position}><mesh geometry={geometry} material={materials.darkWood} position={[0,0,recess?-1.42:0]}/><mesh geometry={geometry} scale={[.92,.94,1]} position={[0,0,.015]} material={materials.glass}/>
  {[-.35,0,.35].map(v=><Box key={v} size={[.05,height*(Math.abs(v)<.01?.95:.8),.08]} position={[v*width,0,.04]} material={materials.wood}/>)}
  <Box size={[width,.06,.08]} position={[0,-height*.1,.04]} material={materials.wood}/><Box size={[width+.3,.1,.35]} position={[0,-height/2-.05,.03]} material={materials.stone}/>
  <pointLight position={[0,.1,.2]} color="#ffc275" intensity={1.5} distance={2.1}/></group>;
@@ -54,7 +54,7 @@ export function Architecture(){
  <Wall x={3.22} z={side>0?2.02:-2.04} w={3.0} eave={5.03} back={side<0} openings={[...openings(side>0?'front':'back',[1]),{x:3.15,y:4.13,w:1.95,h:1.6,a:.78}]}/>
  <Box size={[3.08,.14,.24]} position={[-3,3.02,side*2.13]} material={materials.stone}/>
  <Box size={[3.1,.12,.24]} position={[3.2,3.1,side*2.22]} material={materials.stone}/>
- <group position={[3.15,4.13,side*2.14]} rotation={[0,side<0?Math.PI:0,0]}><FixedArch position={[0,0,0]} width={1.95}/></group>
+ <group position={[3.15,4.13,side*2.14]} rotation={[0,side<0?Math.PI:0,0]}><FixedArch position={[0,0,0]} width={1.95} recess/></group>
  </group>)}
  {/* Narrow connecting roofs and truly different wing depths make a coherent building in orbit. */}
  {[-4.51,4.72].map((x,i)=><group key={x}>
@@ -69,8 +69,8 @@ export function Architecture(){
  <Roof position={[-3,4.98,-.06]} width={3.55} depth={4.88} rise={1.36}/>
  <Roof position={[.15,5.23,0]} width={3.94} depth={5.52} rise={1.91}/>
  <Roof position={[3.16,5.04,0]} width={4.95} depth={3.42} rise={1.08} rotation={Math.PI/2}/>
- <Roof position={[.15,3.15,2.68]} width={2.9} depth={1.6} rise={.85}/>
- <Roof position={[.15,3.16,-2.61]} width={2.65} depth={1.38} rise={.72}/>
+ <Roof position={[.15,2.95,2.77]} width={2.9} depth={1.42} rise={.53}/>
+ <Roof position={[.15,2.94,-2.69]} width={2.65} depth={1.3} rise={.54}/>
  <Greenhouse/><Balcony/><Chimney/><EndGable/>
  {[-1,1].map(s=><group key={s} position={[.15,0,s*2.51]} rotation={[0,s<0?Math.PI:0,0]}>
  {[0,1,2].map(i=><mesh key={i} position={[0,.6+i*.085,.5-i*.13]} material={materials.stone} receiveShadow castShadow><cylinderGeometry args={[1.46-i*.13,1.46-i*.13,.1,36,1,false,-Math.PI/2,Math.PI]}/></mesh>)}

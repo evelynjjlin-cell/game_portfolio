@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { Box, Cylinder, Beam } from '../house/Primitives';
 import { archShape,archFrameGeometry,extrudeProfile } from '../house/ArchShapes';
 import { materials } from '../house/materials';
+import { StoneSurround } from '../rooms/Room';
 import { useWorld } from '../../hooks/useWorld';
 import { useSelectable } from '../../hooks/useSelectable';
 export function Entrance({back=false}:{back?:boolean}){
@@ -14,7 +15,7 @@ export function Entrance({back=false}:{back?:boolean}){
  useFrame((_,dt)=>{const s=useWorld.getState(),open=s.dialog==='about';if(hinge.current)hinge.current.rotation.y=THREE.MathUtils.damp(hinge.current.rotation.y,open?-1.45:0,s.reducedMotion?1000:5,dt);if(light.current)light.current.intensity=THREE.MathUtils.damp(light.current.intensity,open?6:s.evening?4:2.5,5,dt);});
  return <group position={[.15,1.94,back?-2.4:2.4]} rotation={[0,back?Math.PI:0,0]} {...props}>
  <Box size={[1.85,2.3,.1]} position={[0,0,-1.3]} material={materials.darkWood}/><Box size={[1.86,.09,1.4]} position={[0,-1.12,-.6]} material={materials.lightWood}/>
- <mesh geometry={frame} material={materials.wood} castShadow receiveShadow/>
+ <StoneSurround width={1.85} height={2.32} rise={.85}/><mesh geometry={frame} material={materials.wood} castShadow receiveShadow/>
  <group ref={hinge} position={[-.835,0,.19]}><group position={[.835,0,0]}>
  <mesh geometry={panel} material={materials.wood} castShadow receiveShadow/>
  {Array.from({length:9},(_,i)=><Box key={i} size={[.008,1.4,.015]} position={[-.7+i*.175,-.33,.095]} material={materials.darkWood} radius={.002}/>)}

@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { ImportedAsset, ImportedLantern, ImportedPlant } from './ImportedAssets';
 import { Box,Beam,Cylinder } from './Primitives';
+import { Furniture } from './Furniture';
 import { materials } from './materials';
 import { useSelectable } from '../../hooks/useSelectable';
 import { useWorld } from '../../hooks/useWorld';
@@ -23,5 +24,5 @@ export function Scenery(){return <group>
  <ImportedAsset name="oak-side-table" height={.48} position={[3.62,3.42,1.52]}/>
  <ImportedLantern position={[3.65,3.9,1.55]} height={.37} interactive/>
  <ImportedPlant position={[4.15,3.41,2.35]} height={.69}/>
- <WeatherVane/>
+ <group position={[3.15,3.36,-2.13]} rotation={[0,Math.PI,0]}><Box size={[2,.08,1.45]} position={[0,0,-.7]} material={materials.lightWood}/><Box size={[2,1.8,.08]} position={[0,.83,-1.45]} material={materials.darkWood}/><group position={[0,.05,-.6]} scale={.82}><Furniture kind="atelier"/></group></group><WeatherVane/>
  </group>;}

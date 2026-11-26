@@ -10,7 +10,7 @@ import { extrudeProfile } from '../house/ArchShapes';
 import { materials, colored } from '../house/materials';
 import { Furniture } from '../house/Furniture';
 
-function StoneSurround({ width, height, rise }: { width: number; height: number; rise: number }) {
+export function StoneSurround({ width, height, rise }: { width: number; height: number; rise: number }) {
   const crown = useMemo(() => Array.from({ length: 11 }, (_, i) => {
     const a = i / 11 * Math.PI + .008, b = (i + 1) / 11 * Math.PI - .008;
     const r = width / 2 + .018, outer = r + .19, ry = rise + .018;
