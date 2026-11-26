@@ -1,6 +1,6 @@
 {
   "file": "sunroom.glb",
-  "bytes": 2176556,
+  "bytes": 2176920,
   "triangles": 147934,
   "lights": [
     {
@@ -22,6 +22,6 @@
   "drawCalls": 15,
   "emissiveMaterials": [],
   "inspectionImage": "../v03-interior-review/sunroom.png",
-  "sha256": "965390698a46c1020eab81eb333d20267ba54798a46c54d3e023462530aa453a",
+  "sha256": "7eb75d3f55e5c859449dcf9246f59a8ebe8698801e9dd87f2bed494c0ed3937c",
   "deliveryCompression": "EXT_meshopt_compression"
 }

@@ -1,7 +1,7 @@
 {
   "kind": "kitchen",
   "file": "kitchen.glb",
-  "bytes": 1712672,
+  "bytes": 1713156,
   "triangles": 103756,
   "drawMeshes": 19,
   "lights": [
@@ -46,6 +46,6 @@
       0
     ]
   },
-  "sha256": "b1aa6c39807d56c9a2ad8c86d1524e1acc1d6169bab6103e24ecc24a3804686a",
+  "sha256": "62670474043e674dbdd40b5b199e64a0bede6ec539d2296e45294f39f9416c05",
   "deliveryCompression": "EXT_meshopt_compression"
 }

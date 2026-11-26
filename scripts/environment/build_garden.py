@@ -246,7 +246,7 @@ def ground_patch(cx,cz,rx,rz,seed):
     rng=random.Random(seed);sides=23
     verts=[(cx,surface(cx,cz)+.032,cz)]
     for i in range(sides):
-        a=i*2*math.pi/sides;r=.88+.12*rng.random();x=cx+math.cos(a)*rx*r;z=cz+math.sin(a)*rz*r
+        a=i*2*math.pi/sides;r=.75+.16*math.sin(a*5+seed)+.09*rng.random();x=cx+math.cos(a)*rx*r;z=cz+math.sin(a)*rz*r
         verts.append((x,surface(x,z)+.014,z))
     batch(moss).add(verts,[(0,1+(i+1)%sides,1+i) for i in range(sides)])
     for i in range(int(rx*rz*115)):
@@ -260,7 +260,7 @@ def ground_patch(cx,cz,rx,rz,seed):
             for q in range(4):petal((x,y+.045,z),(math.cos(q*math.pi/2),0,math.sin(q*math.pi/2)),(0,1,0),.022,petal_cream)
 
 
-for i,args in enumerate([(-5.7,-3.5,.62,.72),(-5.72,-1.6,.58,.8),(-5.8,.45,.6,.8),(5.65,-3.55,.62,.67),(5.72,-1.8,.64,.83),(5.7,.15,.65,.8),(5.9,1.95,.48,.65),(-3.8,4.64,.78,.26),(4.62,4.62,.56,.28),(-4.6,-4.72,.55,.24),(4.6,-4.72,.55,.24)]):
+for i,args in enumerate([(-5.7,-3.5,.62,.72),(-5.72,-1.6,.58,.8),(-5.8,.45,.6,.8),(5.25,-2.55,.36,1.75),(5.4,.55,.30,1.45),(5.8,1.95,.16,.22),(-3.8,4.64,.78,.26),(4.62,4.62,.56,.28),(-4.6,-4.72,.55,.24),(4.6,-4.72,.55,.24)]):
     ground_patch(*args,150+i)
 
 

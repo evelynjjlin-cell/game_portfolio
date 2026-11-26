@@ -1,7 +1,7 @@
 {
   "kind": "music",
   "file": "music.glb",
-  "bytes": 1285996,
+  "bytes": 1286640,
   "triangles": 72532,
   "drawMeshes": 20,
   "lights": [
@@ -51,6 +51,6 @@
   "dynamicAxes": {
     "RecordPlatter": "y"
   },
-  "sha256": "9adf9cc3371f1f7df713d6757dbe1cbd051f844306a7b30e2f7dd07ff8a8167d",
+  "sha256": "c38ba2c6297b7283244024207c116e0d786cbcdcef6fd05c5be7ca79cb01ce61",
   "deliveryCompression": "EXT_meshopt_compression"
 }

@@ -1,6 +1,6 @@
 {
   "file": "library.glb",
-  "bytes": 3210036,
+  "bytes": 3210376,
   "triangles": 141600,
   "lights": [
     {
@@ -24,6 +24,6 @@
     "emissive_Lamp glow.001"
   ],
   "inspectionImage": "../v03-interior-review/library.png",
-  "sha256": "e53c1cc39d31754473863684d570bb2dcf91e687394f1036a29d5dc3e166c869",
+  "sha256": "b23fd5bffc2b067f66078fb99e5861fb157731ffaa2145e44136ad07026df054",
   "deliveryCompression": "EXT_meshopt_compression"
 }

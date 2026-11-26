@@ -1,6 +1,6 @@
 {
   "file": "living.glb",
-  "bytes": 1096284,
+  "bytes": 1096544,
   "triangles": 53111,
   "lights": [
     {
@@ -36,6 +36,6 @@
     "emissive_Lamp glow"
   ],
   "inspectionImage": "../v03-interior-review/living.png",
-  "sha256": "2f3f6f35f85d1e79994cce6f75c15e40ef75329bc75b78ebeb78c1b15cd2c09d",
+  "sha256": "4df571394531d715a5175791e5a4841a8317ce0c155ad43449a775f3a1f4f6bf",
   "deliveryCompression": "EXT_meshopt_compression"
 }

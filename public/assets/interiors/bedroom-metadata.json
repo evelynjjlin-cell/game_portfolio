@@ -1,6 +1,6 @@
 {
   "file": "bedroom.glb",
-  "bytes": 1543048,
+  "bytes": 1543296,
   "triangles": 117580,
   "lights": [
     {
@@ -34,6 +34,6 @@
     "emissive_vintage_oil_lamp_flame"
   ],
   "inspectionImage": "../v03-interior-review/bedroom.png",
-  "sha256": "937b5e9b861c4970b5923a563da56046b897ee9a6e401e56d9aeff913abb8184",
+  "sha256": "56700093d92e8bbf61dfec91b08a86925316c72d64a924a24cb60b8d529fb9d0",
   "deliveryCompression": "EXT_meshopt_compression"
 }

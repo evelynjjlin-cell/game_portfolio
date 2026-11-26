@@ -35,6 +35,8 @@ node scripts/environment/compress_exports.mjs
 
 The interior builders also accept selected identities after `--`, for example `blender -b -t 2 -P scripts/environment/build_interiors_east.py -- kitchen workshop`. They export per-room metadata with fixture positions and generate Blender review images outside the repository. Those review images are modeling diagnostics; they do not establish browser rendering acceptance.
 
+`compress_exports.mjs` first restores original Blender palette multipliers with `restore_material_factors.py`; this corrects MixRGB factors that the glTF exporter omits without changing third-party materials.
+
 The image packer retains geometry buffers, caps embedded images at 512 pixels, keeps alpha-bearing images as PNG, and uses JPEG for opaque images. Already optimized JPEGs are retained. Run it before geometry compression.
 
 `compress_exports.mjs` applies `npx gltf-transform meshopt INPUT.glb TEMP.glb --level medium` to environment and interior exports, replaces each source with its compressed result, skips already compressed files, refreshes metadata byte counts and hashes, and writes `public/assets/environment/delivery-manifest.json`. Meshopt preserves the named nodes needed for hinges and room animation. The credited source prop derivatives under `public/assets/models/` are left unchanged. Do not substitute a scene-flattening operation that removes hinge or dynamic nodes.

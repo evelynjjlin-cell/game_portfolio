@@ -1,7 +1,7 @@
 {
   "kind": "workshop",
   "file": "workshop.glb",
-  "bytes": 1747816,
+  "bytes": 1748376,
   "triangles": 89221,
   "drawMeshes": 20,
   "lights": [
@@ -51,6 +51,6 @@
   "dynamicAxes": {
     "WorkshopGear": "z"
   },
-  "sha256": "5bcd1e3e1e42ffe57b1175f7e4b327fb2798cb992df758b457c2f639b880c29b",
+  "sha256": "7a31da15a40ef7af7e0ae4e3571aaf5c8aaba1a6c0022c4295a22e069b68ed9c",
   "deliveryCompression": "EXT_meshopt_compression"
 }

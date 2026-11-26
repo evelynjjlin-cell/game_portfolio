@@ -6,6 +6,9 @@ import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const walk=dir=>fs.existsSync(dir)?fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]):[];
+const tintResult=spawnSync('python3',[path.join(root,'scripts/environment/restore_material_factors.py')],{encoding:'utf8'});
+if(tintResult.status!==0)throw Error(tintResult.stderr);
+if(tintResult.stdout)console.log(tintResult.stdout.trim());
 const targets=process.argv.slice(2);
 const all=targets.length?targets.flatMap(p=>fs.statSync(path.resolve(root,p)).isDirectory()?walk(path.resolve(root,p)):[path.resolve(root,p)]):['environment','interiors'].flatMap(p=>walk(path.join(root,'public/assets',p)));
 for(const file of all.filter(p=>p.endsWith('.glb')&&!p.endsWith('.compressed.glb'))){

@@ -1,7 +1,7 @@
 {
   "kind": "art",
   "file": "art.glb",
-  "bytes": 1181572,
+  "bytes": 1182056,
   "triangles": 64458,
   "drawMeshes": 17,
   "lights": [
@@ -46,6 +46,6 @@
       0
     ]
   },
-  "sha256": "e8f63e9275d60c07e81b281436a4bf078138acfb4c54113ba43fdfbda1f30575",
+  "sha256": "6a940fd3273dcf51242ba99bc2f4e87b8d74acebad7b257dfd7e8a1a80c57d5d",
   "deliveryCompression": "EXT_meshopt_compression"
 }
