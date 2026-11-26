@@ -1,0 +1,16 @@
+{
+  "coordinate_system":"Runtime +Y up, +Z front. Blender scripts must convert coordinates or export with explicit +Y-up. All positions below runtime units.",
+  "house":{"width":9.6,"depth":6.4,"base":0.92,"upperFloor":3.77,"eave":6.6,"ridge":8.2},
+  "book":{"width":14.1,"depth":10.6,"maxPageHeight":0.95},
+  "rooms":[
+    {"id":"front-room-01","kind":"sunroom","label":"Sunroom","position":[-3.25,2.17,4.02],"width":2.7,"height":2.5,"arch":0.95,"depth":2.45,"facade":"front","hinge":"outward","floor":0.92},
+    {"id":"front-room-02","kind":"living","label":"Living Room","position":[0.48,2.27,3.23],"width":3.2,"height":2.7,"arch":1.1,"depth":2.65,"facade":"front","hinge":"outward","floor":0.92},
+    {"id":"front-room-03","kind":"library","label":"Library","position":[-2.7,5.12,3.15],"width":2.8,"height":2.7,"arch":1.05,"depth":2.6,"facade":"front","hinge":"outward","floor":3.77},
+    {"id":"front-room-04","kind":"art","label":"Art Studio","position":[2.05,5.12,3.23],"width":3.2,"height":2.7,"arch":1.15,"depth":2.6,"facade":"front","hinge":"inward","floor":3.77},
+    {"id":"back-room-01","kind":"bedroom","label":"Bedroom","position":[-2.65,2.27,-3.23],"width":2.9,"height":2.7,"arch":1.05,"depth":2.65,"facade":"back","hinge":"outward","floor":0.92},
+    {"id":"back-room-02","kind":"kitchen","label":"Kitchen","position":[2.65,2.27,-3.23],"width":2.9,"height":2.7,"arch":1.05,"depth":2.65,"facade":"back","hinge":"outward","floor":0.92},
+    {"id":"back-room-03","kind":"music","label":"Music Room","position":[-2.65,5.12,-3.23],"width":2.9,"height":2.7,"arch":1.05,"depth":2.6,"facade":"back","hinge":"outward","floor":3.77},
+    {"id":"back-room-04","kind":"workshop","label":"Workshop","position":[2.65,5.12,-3.23],"width":2.9,"height":2.7,"arch":1.05,"depth":2.6,"facade":"back","hinge":"outward","floor":3.77}
+  ],
+  "aboutDoors":[{"position":[3.8,2.12,3.24],"width":1.16,"height":2.4,"arch":0.5,"back":false},{"position":[0,2.12,-3.24],"width":1.2,"height":2.4,"arch":0.55,"back":true}]
+}
