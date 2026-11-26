@@ -13,7 +13,7 @@ export default function App(){
  const [access,setAccess]=useState(false);const close=useCallback(()=>openDialog(null),[openDialog]);
  useEffect(()=>{const media=matchMedia('(prefers-reduced-motion: reduce)');const update=()=>useWorld.getState().setReducedMotion(media.matches);update();media.addEventListener('change',update);return()=>media.removeEventListener('change',update);},[]);
  useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==='Escape'&&!useWorld.getState().dialog){closeRoom();setAccess(false);}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[closeRoom]);
- return <main className={`world-page ${evening?'is-evening':''}`}>
+ return <main className={`world-page ${evening?'is-evening':''} ${activeRoom?'is-room':''}`}>
   <a className="skip-link" href="#explore-controls">Skip to exploration controls</a>
   <header><a href="#" className="identity" onClick={e=>{e.preventDefault();setView('reset');}} aria-label="Evelyn Lin, reset view"><span>{profile.name}</span><small>{profile.discipline}</small></a><nav aria-label="Main navigation"><button onClick={()=>openDialog('about')}>About</button><button onClick={()=>openDialog('contact')}>Contact</button><a href={profile.portfolio} target="_blank" rel="noopener noreferrer" className="portfolio-link">UX Portfolio <ExternalLink size={13} aria-hidden="true"/></a></nav></header>
   <div className="scene" aria-label="Interactive miniature house on an open book"><SceneBoundary><Suspense fallback={<div className="loading"><BookOpen size={24}/><span>Setting the scene…</span></div>}><WorldScene/></Suspense></SceneBoundary></div>

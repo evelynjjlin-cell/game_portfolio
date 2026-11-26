@@ -7,3 +7,6 @@
 .loading-models{z-index:3;background:#eeebe4;color:#4b5d4e;font-size:12px;letter-spacing:1px;pointer-events:none}.loading-track{width:150px;height:2px;background:#c8cabb}.loading-track i{display:block;height:100%;background:#48694d;transition:width .25s}.is-evening .loading-models{background:#313d42;color:#e7e9da}
 
 @media(max-height:600px) and (min-width:521px){header{padding:16px 28px}.identity>span{font-size:23px}footer{bottom:15px;left:28px;right:28px}.room-controls{bottom:70px}.interaction-hint{top:80px}.scene-caption{left:20px}.lighting-control{right:22px}}
+
+/* Keep navigation legible over close-up stone and timber. */
+.is-room header{background:linear-gradient(180deg,#f4f0e8f5 0%,#f4f0e8d9 56%,#f4f0e800 100%);padding-bottom:44px}.is-room .scene-caption,.is-room .gesture-hint{opacity:0}.is-room.is-evening header{background:linear-gradient(180deg,#344145f5 0%,#344145d9 56%,#34414500 100%)}
