@@ -18,7 +18,7 @@ function FixedArch({position,width=1.8,height=1.6,recess=false}:{position:[numbe
  return <group position={position}><mesh geometry={geometry} material={materials.darkWood} position={[0,0,recess?-1.42:0]}/><mesh geometry={geometry} scale={[.92,.94,1]} position={[0,0,.015]} material={materials.glass}/>
  {[-.35,0,.35].map(v=><Box key={v} size={[.05,height*(Math.abs(v)<.01?.95:.8),.08]} position={[v*width,0,.04]} material={materials.wood}/>)}
  <Box size={[width,.06,.08]} position={[0,-height*.1,.04]} material={materials.wood}/><Box size={[width+.3,.1,.35]} position={[0,-height/2-.05,.03]} material={materials.stone}/>
- <pointLight position={[0,.1,.2]} color="#ffc275" intensity={1.5} distance={2.1}/></group>;
+ {!recess&&<pointLight position={[0,.1,.2]} color="#ffc275" intensity={1.5} distance={2.1}/>}</group>;
 }
 function Balcony({back=false}:{back?:boolean}){return <group position={[3.15,3.32,back?-2.39:2.35]} rotation={[0,back?Math.PI:0,0]}>
  <Box size={[2.65,.16,1.05]} material={materials.stone}/><Box size={[2.5,.07,1.02]} position={[0,.1,0]} material={materials.lightWood}/>

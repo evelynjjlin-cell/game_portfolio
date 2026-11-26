@@ -1,8 +1,9 @@
-import { Suspense, useMemo, useRef, useState } from 'react';
+import { Suspense, useContext, useMemo, useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useSelectable } from '../../hooks/useSelectable';
+import { RoomLightingContext } from '../lighting/RoomLightingContext';
 import { useWorld } from '../../hooks/useWorld';
 
 /** Human-made, CC0 individual props. Source, artists and processing: ASSET_CREDITS.md.
@@ -72,12 +73,13 @@ export function ImportedPlant({ height = .75, position, rotation, interactive = 
 }
 export function ImportedLantern({ height = .46, position, rotation, interactive = true, active = false, hovered = false }: TransformProps & { interactive?: boolean; active?: boolean; hovered?: boolean }) {
   const [on, setOn] = useState(true);
+  const roomLight=useContext(RoomLightingContext);
   const light = useRef<THREE.PointLight>(null);
   const glow = useRef<THREE.MeshStandardMaterial>(null);
-  const events = useSelectable('Switch the lantern', () => setOn(value => !value));
+  const events = useSelectable('Switch the lantern', () => setOn(value => {roomLight?.setOn(!value);return !value;}));
   const evening = useWorld(s => s.evening);
   useFrame((_, dt) => {
-    const target = on ? (active ? 1.8 : hovered ? 1.25 : evening ? .9 : .38) : 0;
+    const target = on ? (active || roomLight?.active ? 1.8 : hovered || roomLight?.hovered ? 1.25 : evening ? .9 : .38) : 0;
     if (light.current) light.current.intensity = THREE.MathUtils.damp(light.current.intensity, target, 5, dt);
     if (glow.current) glow.current.emissiveIntensity = THREE.MathUtils.damp(glow.current.emissiveIntensity, target * 1.6, 5, dt);
   });
@@ -86,6 +88,6 @@ export function ImportedLantern({ height = .46, position, rotation, interactive 
     <mesh position={[0, height * .33, 0]} scale={[height * .037, height * .065, height * .037]}>
       <sphereGeometry args={[1, 8, 8]}/><meshStandardMaterial ref={glow} color="#ffe1b0" emissive="#ffbe6a" emissiveIntensity={1.2}/>
     </mesh>
-    <pointLight ref={light} position={[0, height * .4, 0]} color="#ffc27d" intensity={.38} distance={height * 5} decay={2}/>
+    {!roomLight && <pointLight ref={light} position={[0, height * .4, 0]} color="#ffc27d" intensity={.38} distance={height * 5} decay={2}/> }
   </group>;
 }

@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useWorld } from '../../hooks/useWorld';
@@ -8,6 +8,7 @@ import type { RoomConfig } from '../../config/rooms';
 import { Box, Cylinder, Repeated, type Piece } from '../house/Primitives';
 import { extrudeProfile } from '../house/ArchShapes';
 import { materials, colored } from '../house/materials';
+import { RoomLightingContext } from '../lighting/RoomLightingContext';
 import { Furniture } from '../house/Furniture';
 
 export function StoneSurround({ width, height, rise }: { width: number; height: number; rise: number }) {
@@ -38,6 +39,8 @@ export function StoneSurround({ width, height, rise }: { width: number; height: 
 }
 
 export function Room({ room }: { room: RoomConfig }) {
+  const [lampOn,setLampOn]=useState(true);
+  const phase=useWorld(s=>s.phases[room.id]);
   const light = useRef<THREE.PointLight>(null);
   const bulb = useRef<THREE.MeshStandardMaterial>(null);
   const { width, height, arch, style } = room.opening;
@@ -46,7 +49,7 @@ export function Room({ room }: { room: RoomConfig }) {
   useFrame((_, dt) => {
     const s = useWorld.getState(), phase = s.phases[room.id];
     const target = phase === 'open' || phase === 'opening' ? room.lighting.open : phase === 'focused' ? room.lighting.focused : room.lighting.idle;
-    const intensity = target * (s.evening ? 1.25 : 1);
+    const intensity = target * (s.evening ? 1.25 : 1) * (lampOn?1:.3);
     if (light.current) light.current.intensity = THREE.MathUtils.damp(light.current.intensity, intensity, s.reducedMotion ? 1000 : 6, dt);
     if (bulb.current) bulb.current.emissiveIntensity = THREE.MathUtils.damp(bulb.current.emissiveIntensity, .5 + intensity * .18, s.reducedMotion ? 1000 : 6, dt);
   });
@@ -67,7 +70,7 @@ export function Room({ room }: { room: RoomConfig }) {
     <Repeated size={[width / 9 - .008, .045, depth]} pieces={boards} material={materials.lightWood} />
     <Box size={[width - .08, .13, .035]} position={[0, -height / 2 + .1, -depth + .055]} material={materials.darkWood} radius={.006} />
     <group position={[0, -height / 2 + .06, -depth * .43]}>
-      <Furniture kind={room.furniture} />
+      <RoomLightingContext.Provider value={{setOn:setLampOn,active:phase==='open'||phase==='opening',hovered:phase==='focused'}}><Furniture kind={room.furniture} /></RoomLightingContext.Provider>
     </group>
     {style !== 'greenhouse' && <StoneSurround width={width} height={height} rise={arch} />}
     <Box size={[width + (style === 'greenhouse' ? .12 : .48), .12, .43]} position={[0, -height / 2 - .075, .085]} material={sill} radius={.025} />
