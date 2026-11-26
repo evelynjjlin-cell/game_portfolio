@@ -5,7 +5,7 @@ import { materials } from './materials';
 import { Plant } from './Furniture';
 function Gable({side}:{side:number}){const g=useMemo(()=>{const s=new THREE.Shape();s.moveTo(-2.28,0);s.lineTo(2.28,0);s.lineTo(0,1.8);s.closePath();return new THREE.ExtrudeGeometry(s,{depth:.18,bevelEnabled:false});},[]);return <mesh position={[side*3.8,5.48,0]} rotation={[0,Math.PI/2,0]} geometry={g} material={materials.plaster} castShadow receiveShadow/>;}
 export function Architecture(){
- const tiles=useMemo(()=>{const pieces:Piece[]=[];for(const side of [-1,1])for(let row=0;row<8;row++)for(let col=0;col<20;col++){const z=.1+row*.325;pieces.push({position:[-4.12+col*.433+(row%2)*.08,7.39-z*.71,side*z],rotation:[side*.617,0,0]});}return pieces;},[]);
+ const tiles=useMemo(()=>{const pieces:Piece[]=[];for(const side of [-1,1])for(let row=0;row<8;row++)for(let col=0;col<20;col++){const z=.1+row*.325;pieces.push({position:[-4.12+col*.433+(row%2)*.08,7.5-z*.71,side*z],rotation:[side*.617,0,0]});}return pieces;},[]);
  const boards=useMemo(()=>[.67,3.01,5.43].flatMap(y=>Array.from({length:21},(_,i)=>({position:[-3.7+i*.37,y,0] as [number,number,number]}))),[]);
  return <group>
   <Box size={[8.1,.18,4.9]} position={[0,.56,0]} material={materials.stone}/>
