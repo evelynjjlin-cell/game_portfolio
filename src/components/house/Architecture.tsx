@@ -15,7 +15,7 @@ function Wall({x,z,w,eave,rise=0,back=false,openings=[]}:{x:number;z:number;w:nu
 }
 function FixedArch({position,width=1.8,height=1.6}:{position:[number,number,number];width?:number;height?:number}){
  const geometry=useMemo(()=>new THREE.ShapeGeometry(archShape(width,height,width*.47),32),[width,height]);
- return <group position={position}><mesh geometry={geometry} material={materials.darkWood}/><mesh geometry={geometry} scale={[.92,.94,1]} position={[0,0,.015]} material={materials.glass}/>
+ return <group position={position}><mesh geometry={geometry} material={materials.darkWood} position={[0,0,-1.42]}/><mesh geometry={geometry} scale={[.92,.94,1]} position={[0,0,.015]} material={materials.glass}/>
  {[-.35,0,.35].map(v=><Box key={v} size={[.05,height*(Math.abs(v)<.01?.95:.8),.08]} position={[v*width,0,.04]} material={materials.wood}/>)}
  <Box size={[width,.06,.08]} position={[0,-height*.1,.04]} material={materials.wood}/><Box size={[width+.3,.1,.35]} position={[0,-height/2-.05,.03]} material={materials.stone}/>
  <pointLight position={[0,.1,.2]} color="#ffc275" intensity={1.5} distance={2.1}/></group>;
@@ -43,6 +43,7 @@ function Chimney(){const blocks=useMemo(()=>Array.from({length:7},(_,row)=>Array
  <Box size={[1.08,.18,.97]} position={[0,7.62,-.44]} material={materials.stone}/>
  <Box size={[.65,.27,.55]} position={[0,7.84,-.44]} material={materials.darkWood}/><Box size={[.95,.13,.84]} position={[0,8.03,-.44]} material={materials.wood}/>
  </group>;}
+function EndGable(){const geo=useMemo(()=>{const s=new THREE.Shape();s.moveTo(-2.18,0);s.lineTo(2.18,0);s.lineTo(0,.94);s.closePath();return new THREE.ExtrudeGeometry(s,{depth:.13,bevelEnabled:false});},[]);return <group position={[4.71,5.03,0]} rotation={[0,Math.PI/2,0]}><mesh geometry={geo} material={materials.plaster} castShadow receiveShadow/><mesh position={[0,.38,.145]} material={materials.darkWood}><circleGeometry args={[.23,32]}/></mesh><mesh position={[0,.38,.16]} material={materials.wood}><torusGeometry args={[.24,.045,10,32]}/></mesh><Box size={[.025,.42,.05]} position={[0,.38,.17]} material={materials.brass}/></group>;}
 export function Architecture(){
  const openings=(facade:'front'|'back',indexes:number[])=>indexes.map(i=>{const r=rooms.filter(r=>r.facade===facade)[i];return {x:r.position[0],y:r.position[1],w:r.opening.width,h:r.opening.height,a:r.opening.arch};});
  return <group>
@@ -70,7 +71,7 @@ export function Architecture(){
  <Roof position={[3.16,5.04,0]} width={4.95} depth={3.42} rise={1.08} rotation={Math.PI/2}/>
  <Roof position={[.15,3.15,2.68]} width={2.9} depth={1.6} rise={.85}/>
  <Roof position={[.15,3.16,-2.61]} width={2.65} depth={1.38} rise={.72}/>
- <Greenhouse/><Balcony/><Chimney/>
+ <Greenhouse/><Balcony/><Chimney/><EndGable/>
  {[-1,1].map(s=><group key={s} position={[.15,0,s*2.51]} rotation={[0,s<0?Math.PI:0,0]}>
  {[0,1,2].map(i=><mesh key={i} position={[0,.6+i*.085,.5-i*.13]} material={materials.stone} receiveShadow castShadow><cylinderGeometry args={[1.46-i*.13,1.46-i*.13,.1,36,1,false,-Math.PI/2,Math.PI]}/></mesh>)}
  </group>)}

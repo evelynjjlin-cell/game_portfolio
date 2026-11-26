@@ -1,28 +1,164 @@
 import { useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Ball, Box, Cylinder, Beam } from './Primitives';
-import { colored, materials } from './materials';
+import { Box, Cylinder, Beam, Repeated, type Piece } from './Primitives';
+import { materials } from './materials';
+import { ImportedAsset, ImportedPlant, ImportedLantern } from './ImportedAssets';
 import { useSelectable } from '../../hooks/useSelectable';
 import { useWorld } from '../../hooks/useWorld';
-const bookColors=['#60776b','#b48c64','#baaaa0','#ded0b2','#496365'].map(colored);
-export function LittleBooks({position=[0,0,0] as [number,number,number]}){return <group position={position}>{bookColors.map((m,i)=><group key={i} position={[i*.115-.23,0,0]} rotation={[0,0,i===4?-.12:0]}><Box size={[.09,.32+(i%3)*.04,.23]} position={[0,.18,0]} material={m}/><Box size={[.065,.012,.007]} position={[0,.28,.12]} material={materials.brass}/></group>)}</group>;}
-export function Plant({position=[0,0,0] as [number,number,number],scale=1,interactive=false}:{position?:[number,number,number];scale?:number;interactive?:boolean}){
- const leaves=useRef<THREE.Group>(null);const tick=useRef(0);const props=useSelectable('A little rustle',()=>{tick.current=3;});
- useFrame((_,dt)=>{if(tick.current>0){tick.current=Math.max(0,tick.current-dt*2);if(leaves.current)leaves.current.rotation.z=useWorld.getState().reducedMotion?0:Math.sin(tick.current*12)*tick.current*.035;}});
- return <group position={position} scale={scale} {...(interactive?props:{})}><Cylinder radius={.19} top={.23} height={.33} position={[0,.16,0]} material={materials.terracotta}/><Cylinder radius={.235} height={.055} position={[0,.31,0]} material={materials.terracotta}/><Cylinder radius={.2} height={.015} position={[0,.34,0]} material={materials.darkWood}/><group ref={leaves}><Beam from={[0,.31,0]} to={[0,.88,0]} width={.025} material={materials.leaf}/>{Array.from({length:7},(_,i)=>{const angle=i*2.4;return <group key={i} position={[Math.cos(angle)*.12,.44+i*.06,Math.sin(angle)*.12]} rotation={[.4*Math.cos(angle),angle,.7]}><Ball scale={[.07,.19,.025]} material={i%2===0?materials.leaf:materials.sage}/></group>;})}</group></group>;
+
+const bookColors = ['#5f7463', '#a48157', '#9a786a', '#d5c39b', '#506b6c', '#74624e'].map(color => {
+  const material = materials.cover.clone(); material.color.set(color); return material;
+});
+const rugMaterials = ['#a38e71', '#b39781', '#73847d', '#a3a28b'].map(color => {
+  const material = materials.fabric.clone(); material.color.set(color); return material;
+});
+
+/** Individual stitched spines, reused by both the bookcases and the attic. */
+export function LittleBooks({ position = [0, 0, 0] as [number, number, number] }) {
+  return <group position={position}>{bookColors.slice(0, 5).map((material, i) => {
+    const h = .26 + (i % 3) * .035;
+    return <group key={i} position={[i * .092 - .18, 0, 0]} rotation={[0, 0, i === 4 ? -.09 : 0]}>
+      <Box size={[.075, h, .18]} position={[0, h / 2, 0]} radius={.008} material={material} />
+      <Box size={[.055, h - .025, .15]} position={[0, h / 2, -.013]} radius={.004} material={materials.paper} />
+      {[.045, h - .045].map(y => <Box key={y} size={[.06, .009, .007]} position={[0, y, .093]} radius={.003} material={materials.brass} />)}
+    </group>;
+  })}</group>;
 }
-export function Lamp({position,interactive=true}:{position:[number,number,number];interactive?:boolean}){
- const [on,setOn]=useState(true);const props=useSelectable('Switch the desk lamp',()=>setOn(s=>!s));
- return <group position={position} {...(interactive?props:{})}><Cylinder radius={.14} height={.035}/><Cylinder radius={.023} height={.36} position={[0,.19,0]}/><mesh position={[0,.43,0]} castShadow><coneGeometry args={[.23,.24,24,1,true]}/><meshStandardMaterial color="#e8cd94" side={THREE.DoubleSide} emissive="#ffb64b" emissiveIntensity={on?.34:0}/></mesh><Ball position={[0,.36,0]} scale={[.075,.06,.075]} material={undefined}><meshStandardMaterial color="#ffdfad" emissive="#ffc87b" emissiveIntensity={on?2:0}/></Ball>{on&&<pointLight position={[0,.35,0]} intensity={.45} distance={1.25} color="#ffbf70" decay={2}/>}</group>;
+
+export function Plant({ position = [0, 0, 0] as [number, number, number], scale = 1, interactive = false }: {
+  position?: [number, number, number]; scale?: number; interactive?: boolean;
+}) { return <ImportedPlant position={position} height={.88 * scale} interactive={interactive} />; }
+
+export function Lamp({ position, interactive = true }: { position: [number, number, number]; interactive?: boolean }) {
+  return <ImportedLantern position={position} height={.36} interactive={interactive} />;
 }
-function Desk(){return <group><Box size={[1.35,.09,.58]} position={[0,.58,-.42]} material={materials.lightWood}/>{[-.55,.55].flatMap(x=>[-.64,-.2].map(z=><Box key={`${x}${z}`} size={[.055,.55,.055]} position={[x,.29,z]} material={materials.darkWood}/>))}<Box size={[.42,.055,.3]} position={[-.14,.65,-.4]} material={materials.paper}/><Box size={[.022,.025,.3]} position={[-.04,.69,-.38]} rotation={[0,.25,0]} material={materials.ink}/><Lamp position={[.43,.64,-.46]}/><Stool position={[0,0,.16]}/></group>;}
-function Stool({position}:{position:[number,number,number]}){return <group position={position}><Cylinder radius={.25} height={.08} position={[0,.38,0]} material={materials.fabric}/>{[-.16,.16].flatMap(x=>[-.16,.16].map(z=><Box key={`${x}${z}`} size={[.04,.36,.04]} position={[x,.18,z]} material={materials.wood}/>))}</group>;}
-function Armchair(){return <group position={[-.23,0,-.1]} rotation={[0,.15,0]}><Box size={[.75,.18,.66]} position={[0,.31,0]} radius={.08} material={materials.fabric}/><Box size={[.75,.64,.17]} position={[0,.56,-.3]} radius={.07} material={materials.fabric}/>{[-1,1].map(s=><group key={s}><Box size={[.13,.32,.65]} position={[s*.38,.48,0]} radius={.05} material={materials.fabric}/><Box size={[.055,.23,.05]} position={[s*.3,.11,.23]} material={materials.wood}/></group>)}<Box size={[.31,.3,.12]} position={[.03,.64,-.17]} rotation={[0,0,.13]} radius={.05} material={materials.cream}/></group>;}
-function RecordPlayer(){const [playing,setPlaying]=useState(false);const ref=useRef<THREE.Group>(null);const props=useSelectable('Start or stop the record',()=>setPlaying(p=>!p));useFrame((_,dt)=>{if(ref.current&&playing&&!useWorld.getState().reducedMotion)ref.current.rotation.y+=dt*1.6;});return <group position={[0,.62,-.33]} {...props}><Box size={[.8,.12,.54]} material={materials.wood}/><group ref={ref} position={[-.08,.075,0]}><Cylinder radius={.22} height={.018} material={materials.ink}/><Cylinder radius={.075} height={.022} material={materials.terracotta}/><Box size={[.15,.006,.008]} position={[.11,.02,0]} material={materials.brass}/></group><Beam from={[.3,.09,-.13]} to={[.12,.1,.1]} width={.018} material={materials.brass}/></group>;}
-export function Furniture({kind}:{kind:'study'|'reading'|'music'|'atelier'}){
- const rug=useMemo(()=>colored(kind==='reading'?'#aa795f':'#a2aaa1'),[kind]);
- return <group><Box size={[1.44,.018,1.13]} position={[0,.025,-.07]} radius={.06} material={rug}/>{kind==='study'?<Desk/>:kind==='reading'?<><Armchair/><group position={[.58,.44,-.37]}><Cylinder radius={.24} height={.055} material={materials.lightWood}/><Cylinder radius={.035} height={.4} position={[0,-.22,0]} material={materials.wood}/><Lamp position={[0,.05,0]}/></group></>:kind==='music'?<><Box size={[1.25,.52,.5]} position={[0,.28,-.34]} material={materials.lightWood}/><RecordPlayer/><LittleBooks position={[-.9,0,-.3]}/></>:<><Desk/><group position={[-.62,.88,-.55]}><Box size={[.45,.42,.03]} rotation={[.05,0,0]} material={materials.paper}/><Box size={[.17,.19,.035]} position={[-.07,0,.02]} material={materials.sage}/><Ball position={[.09,.06,.03]} scale={[.07,.07,.01]} material={materials.terracotta}/></group></>}
- <Box size={[1.75,.07,.22]} position={[0,1.32,-.77]} material={materials.lightWood}/><LittleBooks position={[-.42,1.36,-.77]}/><Plant position={[.53,1.36,-.75]} scale={.4}/>
- </group>;
+
+/** Original built-in joinery, with measured bays, moulded cornice and batched books. */
+function Bookcase({ width = 1.82, height = 1.63, position = [0, 0, -.8] as [number, number, number], seed = 1 }: {
+  width?: number; height?: number; position?: [number, number, number]; seed?: number;
+}) {
+  const shelves = [.24, .66, 1.08, 1.5].filter(y => y < height);
+  const books = useMemo(() => {
+    const pieces: Piece[][] = bookColors.map(() => []), bands: Piece[] = [];
+    for (let row = 0; row < shelves.length - 1; row++) {
+      const count = Math.floor((width - .14) / .095);
+      for (let i = 0; i < count; i++) {
+        // Small irregular gaps are intentional; the shelving is inhabited, not a solid texture.
+        if ((i + row * 3 + seed) % 9 === 0 || (row === 1 && i > count - 4)) continue;
+        const h = .245 + ((i * 7 + row * 3 + seed) % 5) * .016;
+        const x = -width / 2 + .13 + i * .091;
+        const w = .063 + (i % 3) * .007;
+        pieces[(i + row + seed) % bookColors.length].push({ position: [x, shelves[row] + .035 + h / 2, .025], scale: [w, h, .19], rotation: [0, 0, i === count - 1 ? -.06 : 0] });
+        bands.push({ position: [x, shelves[row] + .08, .124], scale: [w * .7, .008, .008] });
+        bands.push({ position: [x, shelves[row] + h - .015, .124], scale: [w * .7, .008, .008] });
+      }
+    }
+    return { pieces, bands };
+  }, [width, height, seed]);
+  return <group position={position}>
+    <Box size={[width, height, .035]} position={[0, height / 2, -.1]} radius={.006} material={materials.darkWood} />
+    {[-1, 1].map(side => <group key={side}>
+      <Box size={[.065, height, .26]} position={[side * (width / 2 - .03), height / 2, .015]} radius={.012} material={materials.wood} />
+      <Box size={[.024, height - .12, .026]} position={[side * (width / 2 - .025), height / 2, .16]} radius={.005} material={materials.lightWood} />
+    </group>)}
+    {shelves.map(y => <group key={y}><Box size={[width, .055, .28]} position={[0, y, .015]} radius={.009} material={materials.wood} /><Box size={[width, .018, .022]} position={[0, y + .017, .16]} radius={.005} material={materials.lightWood} /></group>)}
+    <Box size={[width + .08, .07, .32]} position={[0, height, .025]} radius={.015} material={materials.darkWood} />
+    <Box size={[width + .04, .035, .29]} position={[0, height - .053, .018]} radius={.008} material={materials.lightWood} />
+    <Box size={[width + .06, .09, .3]} position={[0, .055, .025]} radius={.012} material={materials.wood} />
+    <Box size={[width - .12, .12, .035]} position={[0, .16, .12]} radius={.009} material={materials.lightWood} />
+    {books.pieces.map((pieces, i) => <Repeated key={i} size={[1, 1, 1]} pieces={pieces} material={bookColors[i]} />)}
+    <Repeated size={[1, 1, 1]} pieces={books.bands} material={materials.brass} />
+  </group>;
+}
+
+function OpenNotebook({ position = [0, 0, 0] as [number, number, number] }) {
+  return <group position={position} rotation={[0, -.12, 0]}>
+    {[-1, 1].map(side => <group key={side} rotation={[0, 0, side * .035]}>
+      <Box size={[.175, .014, .26]} position={[side * .09, .012, 0]} radius={.009} material={materials.cover} />
+      <Box size={[.162, .018, .245]} position={[side * .088, .025, -.003]} radius={.005} material={materials.paper} />
+    </group>)}
+    <Cylinder radius={.007} height={.22} position={[.12, .042, .01]} rotation={[Math.PI / 2, 0, .12]} material={materials.wood} />
+  </group>;
+}
+
+function Cup({ position }: { position: [number, number, number] }) {
+  const profile = useMemo(() => [new THREE.Vector2(.025, 0), new THREE.Vector2(.045, .008), new THREE.Vector2(.055, .08), new THREE.Vector2(.052, .088), new THREE.Vector2(.046, .083), new THREE.Vector2(.038, .015)], []);
+  return <group position={position}>
+    <Cylinder radius={.085} height={.012} material={materials.cream} />
+    <mesh position={[0, .007, 0]} material={materials.cream} castShadow><latheGeometry args={[profile, 20]} /></mesh>
+    <mesh position={[.059, .051, 0]} material={materials.cream} castShadow><torusGeometry args={[.023, .006, 8, 18]} /></mesh>
+    <Cylinder radius={.043} height={.003} position={[0, .084, 0]} material={materials.darkWood} />
+  </group>;
+}
+
+function RecordPlayer({ position }: { position: [number, number, number] }) {
+  const [playing, setPlaying] = useState(false), record = useRef<THREE.Group>(null);
+  const events = useSelectable('Start or stop the record', () => setPlaying(value => !value));
+  useFrame((_, dt) => { if (record.current && playing && !useWorld.getState().reducedMotion) record.current.rotation.y += dt * 1.6; });
+  return <group position={position} {...events}>
+    <Box size={[.58, .085, .37]} radius={.025} material={materials.darkWood} />
+    <Box size={[.54, .018, .34]} position={[0, .051, 0]} radius={.014} material={materials.lightWood} />
+    <group ref={record} position={[-.06, .068, 0]}>
+      <Cylinder radius={.15} height={.008} material={materials.ink} />
+      {[.11, .125, .14].map(r => <mesh key={r} rotation={[-Math.PI / 2, 0, 0]} position={[0, .005, 0]} material={materials.darkWood}><torusGeometry args={[r, .0009, 4, 36]} /></mesh>)}
+      <Cylinder radius={.043} height={.011} material={bookColors[1]} />
+      <Cylinder radius={.008} height={.025} material={materials.brass} />
+    </group>
+    <Beam from={[.22, .08, -.12]} to={[.07, .09, .09]} width={.013} material={materials.brass} />
+    <Cylinder radius={.018} height={.015} position={[.23, .075, .12]} material={materials.brass} />
+    <group position={[0, .04, -.18]} rotation={[-1.08, 0, 0]}><Box size={[.58, .025, .36]} position={[0, 0, -.18]} radius={.015} material={materials.wood} /><Box size={[.51, .012, .29]} position={[0, -.017, -.18]} radius={.008} material={materials.darkWood} /></group>
+  </group>;
+}
+
+function DrawingStand() {
+  return <group position={[.47, 0, -.45]}>
+    <Beam from={[-.24, .03, .1]} to={[-.13, 1.33, -.07]} width={.035} material={materials.wood} />
+    <Beam from={[.24, .03, .1]} to={[.13, 1.33, -.07]} width={.035} material={materials.wood} />
+    <Beam from={[0, .03, -.29]} to={[0, 1.24, -.08]} width={.03} material={materials.wood} />
+    <Box size={[.6, .5, .03]} position={[0, 1.03, -.015]} rotation={[-.07, 0, 0]} radius={.009} material={materials.lightWood} />
+    <Box size={[.5, .4, .009]} position={[0, 1.03, .007]} rotation={[-.07, 0, 0]} radius={.005} material={materials.paper} />
+    <Box size={[.67, .045, .09]} position={[0, .76, .03]} radius={.008} material={materials.wood} />
+    <Box size={[.08, .06, .03]} position={[0, 1.3, .015]} radius={.006} material={materials.brass} />
+    <Beam from={[-.17, .94, .033]} to={[.05, 1.15, .027]} width={.009} material={materials.sage} />
+    <Beam from={[.05, 1.15, .027]} to={[.17, .98, .03]} width={.009} material={materials.sage} />
+    <Beam from={[-.17, .94, .033]} to={[.17, .94, .033]} width={.009} material={materials.sage} />
+  </group>;
+}
+
+export function Furniture({ kind }: { kind: 'study' | 'reading' | 'music' | 'atelier' }) {
+  const index = ['study', 'reading', 'music', 'atelier'].indexOf(kind);
+  return <group>
+    <Box size={[1.8, .012, 1.15]} position={[0, .015, -.02]} radius={.045} material={rugMaterials[index]} />
+    <Box size={[1.65, .004, 1.02]} position={[0, .024, -.02]} radius={.04} material={materials.cream} />
+    <Box size={[1.58, .004, .95]} position={[0, .027, -.02]} radius={.04} material={rugMaterials[index]} />
+    {kind === 'study' && <>
+      <Bookcase seed={2} />
+      <ImportedAsset name="oak-side-table" height={.7} position={[.18, 0, -.37]} />
+      <ImportedAsset name="carved-armchair" height={.95} position={[-.55, 0, .18]} rotation={[0, .08, 0]} />
+      <OpenNotebook position={[.05, .71, -.33]} /><ImportedLantern height={.29} position={[.6, .705, -.4]} />
+      <Cup position={[.4, .709, -.15]} />
+    </>}
+    {kind === 'reading' && <>
+      <Bookcase seed={4} />
+      <ImportedAsset name="carved-armchair" height={1.05} position={[-.35, 0, .12]} rotation={[0, .08, 0]} />
+      <ImportedAsset name="oak-side-table" height={.48} position={[.65, 0, .1]} />
+      <ImportedLantern height={.34} position={[.72, .485, .08]} /><Cup position={[.43, .492, .15]} />
+      <ImportedPlant height={.46} position={[.76, 0, -.42]} />
+    </>}
+    {kind === 'music' && <>
+      <Bookcase seed={7} />
+      <ImportedAsset name="carved-armchair" height={.99} position={[.48, 0, .14]} rotation={[0, -.08, 0]} />
+      <ImportedAsset name="oak-side-table" height={.61} position={[-.58, 0, -.22]} />
+      <RecordPlayer position={[-.58, .66, -.2]} />
+      <ImportedLantern height={.37} position={[-.85, 0, .35]} />
+    </>}
+    {kind === 'atelier' && <>
+      <Bookcase width={.86} height={1.54} position={[-.51, 0, -.8]} seed={3} />
+      <DrawingStand />
+      <ImportedAsset name="carved-armchair" height={.94} position={[-.48, 0, .13]} rotation={[0, .1, 0]} />
+      <ImportedAsset name="oak-side-table" height={.48} position={[.56, 0, .15]} />
+      <OpenNotebook position={[.47, .488, .15]} /><ImportedLantern height={.27} position={[.84, .485, .12]} />
+    </>}
+  </group>;
 }

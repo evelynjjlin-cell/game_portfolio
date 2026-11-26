@@ -30,6 +30,7 @@ function PreparedAsset({ name }: { name: ImportedAssetName }) {
           material.roughness = Math.max(.6, material.roughness);
           if (material.normalScale) material.normalScale.multiplyScalar(.6);
           if (material.map) material.map.anisotropy = 4;
+          if(name === 'carved-armchair' && /fabric|cloth|cushion/i.test(material.name)) material.color.set('#e7d9bb');
           if (name === 'potted-plant' && /leaves/.test(material.name)) {
             material.side = THREE.DoubleSide;
             material.alphaTest = .42;

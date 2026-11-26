@@ -10,8 +10,8 @@ const PAGE_D = 3.96;
 const COVER_W = 6.08;
 const COVER_D = 4.15;
 const SEGMENTS = 72;
-const edgeMaterial = new THREE.MeshStandardMaterial({color:'#bfa780',roughness:1,side:THREE.DoubleSide});
-const fineEdgeMaterial = new THREE.MeshStandardMaterial({color:'#d7c4a0',roughness:1,side:THREE.DoubleSide});
+const edgeMaterial = new THREE.MeshStandardMaterial({color:'#af956e',roughness:1,side:THREE.DoubleSide});
+const fineEdgeMaterial = new THREE.MeshStandardMaterial({color:'#cfb895',roughness:1,side:THREE.DoubleSide});
 const bookCloth = materials.cover.clone();
 bookCloth.color.set('#233d32');
 bookCloth.roughness = .92;
@@ -20,9 +20,9 @@ const gilding = materials.brass.clone();
 gilding.color.set('#b99653');
 gilding.roughness=.53;
 
-const pageTop = (t:number) => .53 + .185*Math.sin(Math.PI*t) - .16*Math.exp(-t*13);
-const pageBottom = (t:number) => .17 + .055*Math.sin(Math.PI*t) - .022*Math.exp(-t*13);
-const coverTop = (t:number) => .155 + .055*Math.sin(Math.PI*t) - .025*Math.exp(-t*13);
+const pageTop = (t:number) => .60 + .32*Math.sin(Math.PI*t) - .22*Math.exp(-t*13);
+const pageBottom = (t:number) => .17 + .09*Math.sin(Math.PI*t) - .022*Math.exp(-t*13);
+const coverTop = (t:number) => .155 + .09*Math.sin(Math.PI*t) - .025*Math.exp(-t*13);
 
 /** One closed curved profile, swept along the book's binding. */
 function sectionGeometry(side:number,cover=false){
@@ -53,7 +53,7 @@ function edgeStrata(side:number,alternate=false){
  for(let layer=1;layer<60;layer++){
   if((layer%4===0)!==alternate)continue;
   const f=layer/60;
-  const thickness=layer%7===0?.0035:.0022;
+  const thickness=layer%4===0?.006:.0032;
   const height=(t:number)=>THREE.MathUtils.lerp(pageBottom(t),pageTop(t),f)+.0015*Math.sin(t*28+layer*1.71);
   // Each page edge follows the same curved binding-to-fore-edge section.
   for(const front of [-1,1])for(let i=0;i<SEGMENTS;i++){
@@ -105,7 +105,7 @@ function cornerGeometry(){
 }
 
 function ribbonGeometry(){
- const pts=[new THREE.Vector3(.12,.39,3.5),new THREE.Vector3(.23,.29,3.87),new THREE.Vector3(.31,.11,4.18),new THREE.Vector3(.43,.075,4.62)];
+ const pts=[new THREE.Vector3(.12,.45,3.5),new THREE.Vector3(.23,.29,3.87),new THREE.Vector3(.31,.11,4.18),new THREE.Vector3(.43,.075,4.62)];
  const curve=new THREE.CatmullRomCurve3(pts);
  const vertices:number[]=[];
  for(let i=0;i<25;i++){
