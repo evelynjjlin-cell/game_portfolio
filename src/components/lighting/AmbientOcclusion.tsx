@@ -17,6 +17,11 @@ class ArchitecturalAO extends SSAOPass {
 export function AmbientOcclusion(){
  const {gl,scene,camera,size,viewport}=useThree();
  const pipeline=useMemo(()=>{
+  const context=gl.getContext(),extension=context.getExtension('WEBGL_debug_renderer_info');
+  const renderer=extension?String(context.getParameter(extension.UNMASKED_RENDERER_WEBGL)):'';
+  // Software renderers cannot sustain the extra normal/depth passes during travel.
+  // Keep native-resolution antialiasing and authored lighting on this fallback.
+  if(/swiftshader|llvmpipe|software/i.test(renderer))return null;
   const target=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:2});
   const composer=new EffectComposer(gl,target);
   const beauty=new RenderPass(scene,camera),ao=new ArchitecturalAO(scene,camera,256,256,12),output=new OutputPass();
@@ -24,9 +29,10 @@ export function AmbientOcclusion(){
   composer.addPass(beauty);composer.addPass(ao);composer.addPass(output);
   return{composer,beauty,ao,output};
  },[gl,scene,camera]);
- useEffect(()=>{pipeline.composer.setPixelRatio(viewport.dpr);pipeline.composer.setSize(size.width,size.height);pipeline.ao.setSize(Math.max(1,Math.floor(size.width*viewport.dpr*.65)),Math.max(1,Math.floor(size.height*viewport.dpr*.65)));},[pipeline,size.width,size.height,viewport.dpr]);
- useEffect(()=>()=>{pipeline.composer.dispose();pipeline.ao.dispose();pipeline.output.dispose();},[pipeline]);
+ useEffect(()=>{if(!pipeline)return;pipeline.composer.setPixelRatio(viewport.dpr);pipeline.composer.setSize(size.width,size.height);pipeline.ao.setSize(Math.max(1,Math.floor(size.width*viewport.dpr*.65)),Math.max(1,Math.floor(size.height*viewport.dpr*.65)));},[pipeline,size.width,size.height,viewport.dpr]);
+ useEffect(()=>()=>{pipeline?.composer.dispose();pipeline?.ao.dispose();pipeline?.output.dispose();},[pipeline]);
  useFrame((_,delta)=>{
+  if(!pipeline){gl.render(scene,camera);return;}
   pipeline.ao.ssaoMaterial.uniforms.cameraProjectionMatrix.value.copy(camera.projectionMatrix);
   pipeline.ao.ssaoMaterial.uniforms.cameraInverseProjectionMatrix.value.copy(camera.projectionMatrixInverse);
   pipeline.composer.render(delta);
