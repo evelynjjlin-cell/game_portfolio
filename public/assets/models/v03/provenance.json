@@ -1,0 +1,366 @@
+[
+  {
+    "id": "sofa-victorian",
+    "source_id": "sofa_03",
+    "source_name": "Sofa 03",
+    "source_url": "https://polyhaven.com/a/sofa_03",
+    "source_authors": {
+      "Fran Calvente": "All"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "living",
+    "description": "Carved upholstered Victorian sofa",
+    "triangles": 8003,
+    "meshes": 1,
+    "original_size_xyz_m": [
+      2.73118,
+      1.11826,
+      0.92508
+    ],
+    "normalized_size_xyz": [
+      2.44234,
+      1,
+      0.82725
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 392408,
+    "sha256": "364e73569353662f3500d493ca72d12b89a86576a31465b217695fd30f2ee64a",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/sofa_03/sofa_03_1k.gltf",
+    "source_gltf_md5": "27f31e0500c2dd83a21fd3339ade7821",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  },
+  {
+    "id": "electric-stove",
+    "source_id": "electric_stove",
+    "source_name": "Electric Stove",
+    "source_url": "https://polyhaven.com/a/electric_stove",
+    "source_authors": {
+      "Kuutti Siitonen": "All"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "kitchen",
+    "description": "Enamel electric cooker and oven",
+    "triangles": 13914,
+    "meshes": 19,
+    "original_size_xyz_m": [
+      0.50259,
+      0.8587,
+      0.64762
+    ],
+    "normalized_size_xyz": [
+      0.5853,
+      1,
+      0.75419
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 664140,
+    "sha256": "83e25c738954458d8bb60398abe69981a8a74480933124e618d58348c54ec4e4",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/electric_stove/electric_stove_1k.gltf",
+    "source_gltf_md5": "1ec96abe416e022f792ace742d33947a",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  },
+  {
+    "id": "electric-kettle",
+    "source_id": "vintage_electric_kettle",
+    "source_name": "Vintage Electric Kettle",
+    "source_url": "https://polyhaven.com/a/vintage_electric_kettle",
+    "source_authors": {
+      "SV Garip": "All"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "kitchen",
+    "description": "Vintage electric kettle",
+    "triangles": 14838,
+    "meshes": 1,
+    "original_size_xyz_m": [
+      0.32089,
+      0.30474,
+      0.24855
+    ],
+    "normalized_size_xyz": [
+      1.053,
+      1,
+      0.81562
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 638464,
+    "sha256": "0ee358294a670bcddc2f7e8f77e381fe356e348161ec9601a040b30055f27a42",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_electric_kettle/vintage_electric_kettle_1k.gltf",
+    "source_gltf_md5": "2b916b831d913ba1785a8b08ab2f0f61",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  },
+  {
+    "id": "boombox",
+    "source_id": "boombox",
+    "source_name": "Boombox",
+    "source_url": "https://polyhaven.com/a/boombox",
+    "source_authors": {
+      "Thomas Paul Mouilleron": "All"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "music",
+    "description": "Portable stereo with detailed speaker grilles",
+    "triangles": 10168,
+    "meshes": 1,
+    "original_size_xyz_m": [
+      0.72378,
+      0.4701,
+      0.18646
+    ],
+    "normalized_size_xyz": [
+      1.53963,
+      1,
+      0.39665
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 597176,
+    "sha256": "6a7456d68342bcf4568a1cab0d13a167de5ca1fb80ef93ab272aab4983d683b2",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/boombox/boombox_1k.gltf",
+    "source_gltf_md5": "5ee2b292c7bce0849e3a4ee7cc971460",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  },
+  {
+    "id": "hand-plane",
+    "source_id": "hand_plane_no4",
+    "source_name": "Hand Plane No4",
+    "source_url": "https://polyhaven.com/a/hand_plane_no4",
+    "source_authors": {
+      "Satyaki Mandal": "All"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "workshop",
+    "description": "Woodworking hand plane",
+    "triangles": 8220,
+    "meshes": 1,
+    "original_size_xyz_m": [
+      0.3308,
+      0.1978,
+      0.08432
+    ],
+    "normalized_size_xyz": [
+      1.67236,
+      1,
+      0.42627
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 384588,
+    "sha256": "da51380a60f724ea3731eff6d0de1fef80ce205a69597ffc0e7c9ce42e323141",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hand_plane_no4/hand_plane_no4_1k.gltf",
+    "source_gltf_md5": "b55927f3de30b83c6dd1761f92a1206d",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  },
+  {
+    "id": "articulated-desk-lamp",
+    "source_id": "desk_lamp_arm_01",
+    "source_name": "Desk Lamp Arm 01",
+    "source_url": "https://polyhaven.com/a/desk_lamp_arm_01",
+    "source_authors": {
+      "Yann Kervran": "Rigging",
+      "Kuutti Siitonen": "Modeling & texturing"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "art",
+    "description": "Articulated clamp lamp",
+    "triangles": 24102,
+    "meshes": 1,
+    "original_size_xyz_m": [
+      0.20173,
+      0.89261,
+      0.61387
+    ],
+    "normalized_size_xyz": [
+      0.226,
+      1,
+      0.68773
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 958552,
+    "sha256": "e76a50d3a4600a6a305f9cfabed0f0d23fafff9e9861725999f5dc7e7b0607ec",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/desk_lamp_arm_01/desk_lamp_arm_01_1k.gltf",
+    "source_gltf_md5": "29b204485d30e66ee3f183ef45bf4bb3",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  },
+  {
+    "id": "vintage-oil-lamp",
+    "source_id": "vintage_oil_lamp",
+    "source_name": "Vintage Oil Lamp",
+    "source_url": "https://polyhaven.com/a/vintage_oil_lamp",
+    "source_authors": {
+      "Monsta3D": "All"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "bedroom",
+    "description": "Vintage glass oil lamp",
+    "triangles": 7208,
+    "meshes": 3,
+    "original_size_xyz_m": [
+      0.22,
+      0.80164,
+      0.22
+    ],
+    "normalized_size_xyz": [
+      0.27444,
+      1,
+      0.27444
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 372540,
+    "sha256": "691e03499f3aa3ce41842eacb53e0ab50275bba879d9f117c13c83fe0f7baafc",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_oil_lamp/vintage_oil_lamp_1k.gltf",
+    "source_gltf_md5": "95aefcb2ccfad1f5e10dd69522ec09ed",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  },
+  {
+    "id": "tea-set",
+    "source_id": "tea_set_01",
+    "source_name": "Tea Set 01",
+    "source_url": "https://polyhaven.com/a/tea_set_01",
+    "source_authors": {
+      "James Ray Cock": "texturing",
+      "Rico Cilliers": "modeling",
+      "Jurita Burger": "graphic design"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "sunroom",
+    "description": "Ceramic teapot, cups and saucers",
+    "triangles": 40296,
+    "meshes": 10,
+    "original_size_xyz_m": [
+      0.91848,
+      0.16499,
+      0.48388
+    ],
+    "normalized_size_xyz": [
+      5.56679,
+      1,
+      2.93271
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 1051700,
+    "sha256": "a6621275832857470ac20037b9998f89723ae6429cccf77f5fb96afa66797de4",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/tea_set_01/tea_set_01_1k.gltf",
+    "source_gltf_md5": "157b3a5ace1f2dfd4419789ff4180c59",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  },
+  {
+    "id": "bench-vise",
+    "source_id": "bench_vice_01",
+    "source_name": "Bench Vice 01",
+    "source_url": "https://polyhaven.com/a/bench_vice_01",
+    "source_authors": {
+      "Yann Kervran": "Rigging",
+      "Antanas Kep": "Modeling & Texturing"
+    },
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "room": "workshop",
+    "description": "Cast-metal bench vise",
+    "triangles": 2863,
+    "meshes": 4,
+    "original_size_xyz_m": [
+      0.20048,
+      0.28515,
+      0.39572
+    ],
+    "normalized_size_xyz": [
+      0.70308,
+      1,
+      1.38777
+    ],
+    "origin": "floor center",
+    "up_axis": "+Y",
+    "front_axis": "+Z",
+    "adaptation": "Static evaluated meshes; floor-centered unit-height normalization; preserved UVs and source normals; normal-map strength 0.7; embedded PBR images resized to at most 512px, alpha preserved.",
+    "bytes": 252100,
+    "sha256": "4b1b581ac77ef8fdd63c7d59dcf964ae901592db881645cd99ea99014df36ef1",
+    "texture_max_dimension": 512,
+    "source_gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/bench_vice_01/bench_vice_01_1k.gltf",
+    "source_gltf_md5": "732cc8a08f98136922ddc5ef0fad7bba",
+    "license_verified_on": "2026-11-26",
+    "permitted_distribution": [
+      "public Git repository",
+      "browser-accessible static GLB",
+      "modified derivative"
+    ]
+  }
+]

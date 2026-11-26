@@ -17,6 +17,32 @@ All listed assets use [CC0 1.0 Universal](https://creativecommons.org/publicdoma
 
 The four optimized self-contained GLBs total **1,848,172 bytes (1.76 MiB)**. Original high-resolution downloads are not committed. Repeated placements share geometry, materials and textures. Plant meshes do not cast real-time shadows. Other props use the scene's existing shadow map; no prop adds a shadow-rendering light. No model loader makes third-party requests. `public/assets/models/manifest.json` records dimensions and mesh counts.
 
+## V03 curated room props
+
+The following **nine additional individual assets** were selected from Poly Haven's official model inventory for specific room functions. Each source is CC0, with optional attribution; public repository storage, browser delivery and modified derivatives are allowed under the official licence linked above. These are professional third-party components, not original portfolio sculptures. No complete room or house was downloaded.
+
+| Local asset under `public/assets/models/v03/` | Official source and credited creator(s) | Intended room | Triangles | Packed bytes |
+|---|---|---|---:|---:|
+| `sofa-victorian.glb` | [Sofa 03](https://polyhaven.com/a/sofa_03) — Fran Calvente | Living room | 8,003 | 392,408 |
+| `electric-stove.glb` | [Electric Stove](https://polyhaven.com/a/electric_stove) — Kuutti Siitonen | Kitchen | 13,914 | 664,140 |
+| `electric-kettle.glb` | [Vintage Electric Kettle](https://polyhaven.com/a/vintage_electric_kettle) — SV Garip | Kitchen | 14,838 | 638,464 |
+| `boombox.glb` | [Boombox](https://polyhaven.com/a/boombox) — Thomas Paul Mouilleron | Music room | 10,168 | 597,176 |
+| `bench-vise.glb` | [Bench Vice 01](https://polyhaven.com/a/bench_vice_01) — Antanas Kep (modeling/texturing), Yann Kervran (rigging) | Workshop | 2,863 | 252,100 |
+| `hand-plane.glb` | [Hand Plane No4](https://polyhaven.com/a/hand_plane_no4) — Satyaki Mandal | Workshop | 8,220 | 384,588 |
+| `articulated-desk-lamp.glb` | [Desk Lamp Arm 01](https://polyhaven.com/a/desk_lamp_arm_01) — Kuutti Siitonen (modeling/texturing), Yann Kervran (rigging) | Art studio | 24,102 | 958,552 |
+| `vintage-oil-lamp.glb` | [Vintage Oil Lamp](https://polyhaven.com/a/vintage_oil_lamp) — Monsta3D | Bedroom | 7,208 | 372,540 |
+| `tea-set.glb` | [Tea Set 01](https://polyhaven.com/a/tea_set_01) — Rico Cilliers (modeling), James Ray Cock (texturing), Jurita Burger (graphic design) | Sunroom | 40,296 | 1,051,700 |
+
+The V03 prop library totals **5,311,668 bytes (5.07 MiB), 129,612 triangles** before placement into room exports. Each derivative retains the source silhouette, material regions, UV coordinates and normals. Models are static evaluated meshes, normalized to one unit high with a floor-centered origin, +Y up and +Z front. Bone-display helpers added by Blender's glTF importer are excluded. Original PBR images are embedded at a maximum 512px dimension; opaque images use quality-84 JPEG, alpha-bearing images retain PNG. Normal-map strength is 0.7. No geometric decimation was applied to these nine assets. Rigged originals are delivered as a static pose, not as working appliance or vise mechanisms.
+
+`public/assets/models/v03/provenance.json` records each official source URL, author roles, licence verification, original and normalized dimensions, source glTF MD5, derivative SHA-256, file size and triangle count. `scripts/environment/asset_processing_v03.py` reproduces download/checksum verification, Blender conversion and image packing. Downloaded full-resolution source packages and Poly Haven preview renders are excluded from the repository. The small difference between some source-page and exported triangle counts reflects the actual glTF mesh topology, not a claim of mesh reduction.
+
+## Original Blender environment work
+
+The V03 architectural shell, roof assembly, stone openings, book base, door/window dimensions and hinged joinery are authored for this composition in Blender. Room cabinetry, beds and bedding, soft curtains, shelves, workbenches, desks, piano-related furnishings and other supplemental furniture are custom Blender geometry where present. Their authorship is separate from the listed Poly Haven models and materials. Room GLBs may combine these original constructions with the credited CC0 props; embedding a prop into a room does not change its provenance. Custom joinery is necessary to match actual openings, hinge clearance, independent interactions and the eight room volumes.
+
+`scripts/environment/pack_glb_images.py` also packs embedded images in exported room GLBs without altering mesh buffers or requiring an additional runtime decoder. It preserves already optimized JPEGs and alpha channels and coalesces identical binary chunks. Source props may be instantiated more than once where function calls for a pair, such as two bedside lamps; complete room layouts are authored individually.
+
 ## PBR material sources
 
 | Local derivative files | Source and creator | Licence / attribution | Adaptation | Distribution restrictions |
