@@ -1,0 +1,34 @@
+{
+  "file": "garden.glb",
+  "triangles": 56245,
+  "meshes": 16,
+  "materials": 16,
+  "imported_source": "Poly Haven Potted Plant 02 \u2014 Rico Cilliers, CC0; existing normalized derivative",
+  "original_geometry": "Bentwood terrace chairs, turned pedestal table, textiles, hydrangeas, ivy, flowers, moss islands, grass blades, pavers, candleholder and cup",
+  "book_surface": ".59 + .37*sin(pi*t) - .19*exp(-13*t) + .018*sin(z*.8)*sin(pi*t); t=abs(x)/6.94",
+  "kept_clear": [
+    "all eight room apertures",
+    "both About doors",
+    "mailbox [5.35,.83,3.65]",
+    "outer book rim",
+    "central front and rear steps"
+  ],
+  "terrace_bounds_xyz": [
+    [
+      -6.65,
+      0.7846387345771404,
+      1.92
+    ],
+    [
+      -5.08,
+      1.8346387345771404,
+      4.33
+    ]
+  ],
+  "bytes_before_texture_packing": 2570820,
+  "bytes": 1116240,
+  "sha256": "af175838a4f7e6266444dd46748f701b4f35578209d9ca60934747645facf505",
+  "texture_max_dimension": 512,
+  "draw_calls": 16,
+  "deliveryCompression": "EXT_meshopt_compression"
+}

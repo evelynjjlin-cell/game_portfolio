@@ -1,0 +1,173 @@
+{
+  "files": [
+    {
+      "path": "assets/environment/book.glb",
+      "bytes": 1715408,
+      "sha256": "beb38204ca7d5179d826875dfcd1fe2988cf4bd9c321e4f99d6e40179852ad00",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 5
+    },
+    {
+      "path": "assets/environment/garden.glb",
+      "bytes": 1116240,
+      "sha256": "af175838a4f7e6266444dd46748f701b4f35578209d9ca60934747645facf505",
+      "meshopt": true,
+      "materials": 16,
+      "primitives": 16
+    },
+    {
+      "path": "assets/environment/house-shell.glb",
+      "bytes": 3715116,
+      "sha256": "71eac273008d0fb4ec5ba9b9ec17fa610fba32c0ab45cbf63d53757e5a45c6d4",
+      "meshopt": true,
+      "materials": 17,
+      "primitives": 17
+    },
+    {
+      "path": "assets/environment/joinery/about-back.glb",
+      "bytes": 201116,
+      "sha256": "5e20bb44ed56420c8c422d0524009c4835ef7e8a2df1087426db8b38cb9c2451",
+      "meshopt": true,
+      "materials": 6,
+      "primitives": 8
+    },
+    {
+      "path": "assets/environment/joinery/about-front.glb",
+      "bytes": 201268,
+      "sha256": "3925d4c5a243f6f57654f857c92f663f9abaaef075b773071d3396aa318dd4d1",
+      "meshopt": true,
+      "materials": 6,
+      "primitives": 8
+    },
+    {
+      "path": "assets/environment/joinery/back-room-01.glb",
+      "bytes": 317772,
+      "sha256": "0e3645e21bf76849337fee082bc576647298e73952810de6b96cefce8bb45b0f",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 13
+    },
+    {
+      "path": "assets/environment/joinery/back-room-02.glb",
+      "bytes": 327432,
+      "sha256": "ac5cdbe8a3ba70b4d44913ed63226abd42e6c9835ce739dea90e8eec5a4ddecf",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 13
+    },
+    {
+      "path": "assets/environment/joinery/back-room-03.glb",
+      "bytes": 322700,
+      "sha256": "801085027de363cad392e6038ab0acbdf95cc1a7ed76887c2f0721ee1b9d23b8",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 13
+    },
+    {
+      "path": "assets/environment/joinery/back-room-04.glb",
+      "bytes": 327416,
+      "sha256": "35473e4f934b12b4853db46b68d14baaa8f7e5c87848c99b8d7e0b062a462655",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 13
+    },
+    {
+      "path": "assets/environment/joinery/front-room-01.glb",
+      "bytes": 296244,
+      "sha256": "c62268ea3e996f956fa063d88d177dac9ddbb9ec7b61807828d4aa4807ab0848",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 11
+    },
+    {
+      "path": "assets/environment/joinery/front-room-02.glb",
+      "bytes": 317440,
+      "sha256": "08273563b311a76ee2415a5a7137a1bbdd51f281eb65cd6b0b58984d8d6e2971",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 13
+    },
+    {
+      "path": "assets/environment/joinery/front-room-03.glb",
+      "bytes": 323368,
+      "sha256": "f8d1545d91bfa97c8dacebd4af53ad13c81ea5934f51dbccc519c6e17e607511",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 13
+    },
+    {
+      "path": "assets/environment/joinery/front-room-04.glb",
+      "bytes": 355460,
+      "sha256": "12c615194935884beef1b619e407d669ef74c21ad1e092df9e7f5843353942c2",
+      "meshopt": true,
+      "materials": 5,
+      "primitives": 13
+    },
+    {
+      "path": "assets/interiors/art.glb",
+      "bytes": 1181572,
+      "sha256": "e8f63e9275d60c07e81b281436a4bf078138acfb4c54113ba43fdfbda1f30575",
+      "meshopt": true,
+      "materials": 17,
+      "primitives": 17
+    },
+    {
+      "path": "assets/interiors/bedroom.glb",
+      "bytes": 1543048,
+      "sha256": "937b5e9b861c4970b5923a563da56046b897ee9a6e401e56d9aeff913abb8184",
+      "meshopt": true,
+      "materials": 14,
+      "primitives": 14
+    },
+    {
+      "path": "assets/interiors/kitchen.glb",
+      "bytes": 1712672,
+      "sha256": "b1aa6c39807d56c9a2ad8c86d1524e1acc1d6169bab6103e24ecc24a3804686a",
+      "meshopt": true,
+      "materials": 19,
+      "primitives": 19
+    },
+    {
+      "path": "assets/interiors/library.glb",
+      "bytes": 3210036,
+      "sha256": "e53c1cc39d31754473863684d570bb2dcf91e687394f1036a29d5dc3e166c869",
+      "meshopt": true,
+      "materials": 21,
+      "primitives": 21
+    },
+    {
+      "path": "assets/interiors/living.glb",
+      "bytes": 1096284,
+      "sha256": "2f3f6f35f85d1e79994cce6f75c15e40ef75329bc75b78ebeb78c1b15cd2c09d",
+      "meshopt": true,
+      "materials": 25,
+      "primitives": 25
+    },
+    {
+      "path": "assets/interiors/music.glb",
+      "bytes": 1285996,
+      "sha256": "9adf9cc3371f1f7df713d6757dbe1cbd051f844306a7b30e2f7dd07ff8a8167d",
+      "meshopt": true,
+      "materials": 21,
+      "primitives": 22
+    },
+    {
+      "path": "assets/interiors/sunroom.glb",
+      "bytes": 2176556,
+      "sha256": "965390698a46c1020eab81eb333d20267ba54798a46c54d3e023462530aa453a",
+      "meshopt": true,
+      "materials": 15,
+      "primitives": 15
+    },
+    {
+      "path": "assets/interiors/workshop.glb",
+      "bytes": 1747816,
+      "sha256": "5bcd1e3e1e42ffe57b1175f7e4b327fb2798cb992df758b457c2f639b880c29b",
+      "meshopt": true,
+      "materials": 19,
+      "primitives": 20
+    }
+  ],
+  "totalBytes": 23490960
+}

@@ -43,6 +43,8 @@ The V03 architectural shell, roof assembly, stone openings, book base, door/wind
 
 `scripts/environment/pack_glb_images.py` also packs embedded images in exported room GLBs without altering mesh buffers or requiring an additional runtime decoder. It preserves already optimized JPEGs and alpha channels and coalesces identical binary chunks. Source props may be instantiated more than once where function calls for a pair, such as two bedside lamps; complete room layouts are authored individually.
 
+The terrace and garden in `public/assets/environment/garden.glb` are authored by `scripts/environment/build_garden.py`: original bentwood chairs and turned table, linen cushions, wheel-thrown flowerpots, individual hydrangea florets, cupped ivy leaves and stems, sparse grass/moss islands, stone pavers, cup and candleholder. One existing Potted Plant 02 derivative supplies the botanical accent beside the terrace; its Rico Cilliers/CC0 credit above applies here too. The static garden contains 56,245 triangles in 16 material batches before transport compression. Planting follows the original book's curved page surface and is composed around the actual door/window coordinates, with the eight room openings, About doors and mailbox kept clear. No third-party garden or complete furniture arrangement was used.
+
 ## PBR material sources
 
 | Local derivative files | Source and creator | Licence / attribution | Adaptation | Distribution restrictions |

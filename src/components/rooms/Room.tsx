@@ -1,15 +1,14 @@
-import { useMemo, useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useMemo, useRef } from 'react';
+import { useFrame, useLoader } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import { useWorld } from '../../hooks/useWorld';
 import { useSelectable } from '../../hooks/useSelectable';
-import { HingedWindow } from './HingedWindow';
-import type { RoomConfig } from '../../config/rooms';
-import { Box, Cylinder, Repeated, type Piece } from '../house/Primitives';
-import { extrudeProfile } from '../house/ArchShapes';
-import { materials, colored } from '../house/materials';
-import { RoomLightingContext } from '../lighting/RoomLightingContext';
-import { Furniture } from '../house/Furniture';
+import { rooms, type RoomConfig } from '../../config/rooms';
+import { ArchitecturalJoinery } from './ArchitecturalJoinery';
+import { Box } from '../house/Primitives';
+import { extrudeProfile, archShape } from '../house/ArchShapes';
+import { materials } from '../house/materials';
 
 export function StoneSurround({ width, height, rise }: { width: number; height: number; rise: number }) {
   const crown = useMemo(() => Array.from({ length: 11 }, (_, i) => {
@@ -38,50 +37,62 @@ export function StoneSurround({ width, height, rise }: { width: number; height: 
   </group>;
 }
 
+/** Floor-origin Blender interiors: +Y up, the facade at Z=0, depth into -Z. */
+function useInterior(kind: RoomConfig['kind']) {
+  const {scene} = useGLTF(`/assets/interiors/${kind}.glb`, false, true);
+  return useMemo(() => {
+    const copy = scene.clone(true), lamps: THREE.MeshStandardMaterial[] = [];
+    const localMaterials = new Map<THREE.Material, THREE.Material>();
+    copy.traverse(object => {
+      if (!(object instanceof THREE.Mesh)) return;
+      object.castShadow = object.receiveShadow = true;
+      const normalize = (source: THREE.Material) => {
+        let material = localMaterials.get(source);
+        if (!material) {
+          const next = source.clone() as THREE.MeshStandardMaterial;
+          next.envMapIntensity = .42;
+          if (next.map) next.map.anisotropy = 4;
+          if (/^emissive_/i.test(source.name)) lamps.push(next);
+          if (next.transparent) next.depthWrite = false;
+          localMaterials.set(source, next); material = next;
+        }
+        return material;
+      };
+      object.material = Array.isArray(object.material) ? object.material.map(normalize) : normalize(object.material);
+    });
+    return {scene:copy, lamps, record:copy.getObjectByName('RecordPlatter'), gear:copy.getObjectByName('WorkshopGear')};
+  }, [scene]);
+}
+
 export function Room({ room }: { room: RoomConfig }) {
-  const [lampOn,setLampOn]=useState(true);
-  const phase=useWorld(s=>s.phases[room.id]);
-  const light = useRef<THREE.PointLight>(null);
-  const bulb = useRef<THREE.MeshStandardMaterial>(null);
-  const { width, height, arch, style } = room.opening;
-  const depth = room.depth;
+  const model = useInterior(room.kind);
+  const metadata = useLoader(THREE.FileLoader, `/assets/interiors/${room.kind}-metadata.json`) as string;
+  const fixtures = useMemo(()=>JSON.parse(metadata).lights as {name:string;position:[number,number,number];color:string;intensity:number}[],[metadata]);
+  const lights = useRef<(THREE.PointLight|null)[]>([]);
+  const fill = useRef<THREE.PointLight>(null);
+  const {width,height,arch} = room.opening;
+  const hitSurface = useMemo(() => new THREE.ShapeGeometry(archShape(width-.08,height-.06,arch),48), [width,height,arch]);
   const select = useSelectable(`Open the ${room.label.toLowerCase()}`, () => useWorld.getState().selectRoom(room.id), over => useWorld.getState().hover(over ? room.id : null));
   useFrame((_, dt) => {
     const s = useWorld.getState(), phase = s.phases[room.id];
-    const target = phase === 'open' || phase === 'opening' ? room.lighting.open : phase === 'focused' ? room.lighting.focused : room.lighting.idle;
-    const intensity = target * (s.evening ? 1.25 : 1) * (lampOn?1:.3);
-    if (light.current) light.current.intensity = THREE.MathUtils.damp(light.current.intensity, intensity, s.reducedMotion ? 1000 : 6, dt);
-    if (bulb.current) bulb.current.emissiveIntensity = THREE.MathUtils.damp(bulb.current.emissiveIntensity, .5 + intensity * .18, s.reducedMotion ? 1000 : 6, dt);
+    const active = phase==='open'||phase==='opening';
+    const level = active ? room.lighting.open : phase==='focused' ? room.lighting.focused : room.lighting.idle;
+    const intensity = level * (s.evening ? 1.22 : 1);
+    lights.current.forEach((light,i)=>{if(light) light.intensity=THREE.MathUtils.damp(light.intensity,fixtures[i].intensity*(active?1.8:phase==='focused'?1.35:1)*(s.evening?1.2:1),s.reducedMotion?1000:7,dt);});
+    if(fill.current) fill.current.intensity=THREE.MathUtils.damp(fill.current.intensity,intensity*.34,s.reducedMotion?1000:7,dt);
+    model.lamps.forEach(lamp=>{lamp.emissiveIntensity=THREE.MathUtils.damp(lamp.emissiveIntensity,active?1.3:phase==='focused'?1.0:.68,s.reducedMotion?1000:7,dt);});
+    if(active&&!s.reducedMotion){if(model.record)model.record.rotation.y+=dt*.65;if(model.gear)model.gear.rotation.z+=dt*.19;}
   });
-  const wall = useMemo(() => colored(room.wall), [room.wall]);
-  const boards = useMemo(() => Array.from({ length: 9 }, (_, i) => ({ position: [-width / 2 + width / 9 * (i + .5), -height / 2 + .025, -depth / 2] } as Piece)), [width, height, depth]);
-  const sill = style === 'greenhouse' ? materials.darkWood : materials.trim;
-  return <group position={room.position} rotation={[0, room.facade === 'back' ? Math.PI : 0, 0]} {...select}>
-    <Box size={[width + .06, height + .1, .08]} position={[0, 0, -depth]} material={wall} />
-    <Box size={[width + .06, .09, depth]} position={[0, height / 2 + .03, -depth / 2]} material={style === 'greenhouse' ? materials.glass : materials.cream} castShadow={style !== 'greenhouse'} />
-    {[-1, 1].map(side => <group key={side}>
-      <Box size={[.07, height, depth]} position={[side * width / 2, 0, -depth / 2]} material={style === 'greenhouse' ? materials.glass : wall} castShadow={style !== 'greenhouse'} />
-      {style === 'greenhouse' && <>
-        {[.02, depth / 2, depth - .02].map(z => <Box key={z} size={[.045, height, .045]} position={[side * width / 2, 0, -z]} material={materials.brass} radius={.007} />)}
-        {[-height / 2 + .1, -.15, height / 2 - .07].map(y => <Box key={y} size={[.045, .045, depth]} position={[side * width / 2, y, -depth / 2]} material={materials.brass} radius={.007} />)}
-      </>}
-      <Box size={[.035, .13, depth]} position={[side * (width / 2 - .047), -height / 2 + .1, -depth / 2]} material={materials.darkWood} radius={.006} />
-    </group>)}
-    <Repeated size={[width / 9 - .008, .045, depth]} pieces={boards} material={materials.lightWood} />
-    <Box size={[width - .08, .13, .035]} position={[0, -height / 2 + .1, -depth + .055]} material={materials.darkWood} radius={.006} />
-    <group position={[0, -height / 2 + .06, -depth * .43]}>
-      <RoomLightingContext.Provider value={{setOn:setLampOn,active:phase==='open'||phase==='opening',hovered:phase==='focused'}}><Furniture kind={room.furniture} /></RoomLightingContext.Provider>
-    </group>
-    {style !== 'greenhouse' && <StoneSurround width={width} height={height} rise={arch} />}
-    <Box size={[width + (style === 'greenhouse' ? .12 : .48), .12, .43]} position={[0, -height / 2 - .075, .085]} material={sill} radius={.025} />
-    <Box size={[width + .23, .025, .48]} position={[0, -height / 2 - .012, .075]} material={sill} radius={.009} />
-    <HingedWindow room={room} />
-    <group position={[width * .12, height / 2 - .34, -depth * .5]}>
-      <Cylinder radius={.012} height={.32} position={[0, .14, 0]} material={materials.brass} />
-      <Cylinder radius={.055} height={.035} position={[0, .3, 0]} material={materials.brass} />
-      <mesh position={[0, -.035, 0]} castShadow><coneGeometry args={[.19, .18, 24, 1, true]} /><meshStandardMaterial color="#b99b66" metalness={.65} roughness={.4} side={THREE.DoubleSide} /></mesh>
-      <mesh position={[0, -.08, 0]}><sphereGeometry args={[.07, 16, 10]} /><meshStandardMaterial ref={bulb} color="#ffe2af" emissive="#ffb95f" emissiveIntensity={.8} /></mesh>
-    </group>
-    <pointLight ref={light} position={[0, height / 2 - .62, -depth * .52]} color={room.lighting.color} intensity={room.lighting.idle} distance={depth + 1.65} decay={2} />
+  return <group position={room.position} rotation={[0,room.orientation,0]} {...select}>
+    <group position={[0,-height/2,0]}><primitive object={model.scene} dispose={null}/></group>
+    <ArchitecturalJoinery room={room}/>
+    {/* Only the visible, front-facing aperture is selectable. Solid architecture blocks it. */}
+    <mesh geometry={hitSurface} position={[0,0,.165]} name={room.entranceMesh} userData={{noAO:true}}>
+      <meshBasicMaterial transparent opacity={0} depthWrite={false} colorWrite={false} side={THREE.FrontSide}/>
+    </mesh>
+    <group position={[0,-height/2,0]}>{fixtures.map((fixture,i)=><pointLight key={fixture.name} ref={value=>{lights.current[i]=value;}} position={fixture.position} color={fixture.color} intensity={fixture.intensity} distance={room.depth+1.1} decay={2}/>)}</group>
+    <pointLight ref={fill} position={[0,.15,-.32]} color={room.lighting.color} intensity={room.lighting.idle*.34} distance={room.depth+1} decay={2}/>
   </group>;
 }
+
+for(const room of rooms){useGLTF.preload(`/assets/interiors/${room.kind}.glb`,false,true);useLoader.preload(THREE.FileLoader,`/assets/interiors/${room.kind}-metadata.json`);}

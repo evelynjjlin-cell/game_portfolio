@@ -8,7 +8,7 @@ import { useSelectable } from '../../hooks/useSelectable';
 export function Mailbox(){
  const door=useRef<THREE.Group>(null),letter=useRef<THREE.Group>(null);const open=useWorld(s=>s.dialog==='contact');const props=useSelectable('Open the mailbox · Contact Evelyn',()=>useWorld.getState().openDialog('contact'));
  useFrame((_,dt)=>{const speed=useWorld.getState().reducedMotion?1000:6;if(door.current)door.current.rotation.x=THREE.MathUtils.damp(door.current.rotation.x,open?1.45:0,speed,dt);if(letter.current){letter.current.position.z=THREE.MathUtils.damp(letter.current.position.z,open?.48:0,speed,dt);letter.current.position.y=THREE.MathUtils.damp(letter.current.position.y,open?.18:0,speed,dt);}});
- return <group position={[4.82,.6,2.38]} rotation={[0,.1,0]} {...props}>
+ return <group position={[5.35,.83,3.65]} rotation={[0,.1,0]} {...props}>
  <Cylinder radius={.09} height={.86} position={[0,.43,0]} material={materials.wood}/><Cylinder radius={.2} height={.05} position={[0,.025,0]} material={materials.stone}/>
  <Box size={[.8,.07,.8]} position={[0,.9,0]} material={materials.roofEdge}/>
  {[-1,1].map(s=><Box key={s} size={[.06,.52,.75]} position={[s*.37,1.18,0]} material={materials.roof}/>)}
