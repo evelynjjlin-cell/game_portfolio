@@ -7,7 +7,7 @@ function leafGeometry(side:number,cover=false){
  const shape=new THREE.Shape();const width=cover?5.95:5.76;const lower=cover?.06:.18;
  shape.moveTo(0,lower);shape.lineTo(width,lower+.02);shape.lineTo(width,cover?.2:.46);
  for(let i=40;i>=0;i--){const t=i/40;const y=cover?.2+.04*Math.sin(t*Math.PI):.46+.24*Math.sin(t*Math.PI*.88)-.19*Math.exp(-t*12);shape.lineTo(t*width,y);}
- shape.closePath();const geo=new THREE.ExtrudeGeometry(shape,{depth:cover?8.05:7.78,bevelEnabled:true,bevelSize:cover?.04:.025,bevelThickness:cover?.04:.02,bevelSegments:2,steps:1});geo.translate(0,0,cover?-4.025:-3.89);if(side<0){geo.scale(-1,1,1);geo.computeVertexNormals();}return geo;
+ shape.closePath();const geo=new THREE.ExtrudeGeometry(shape,{depth:cover?8.05:7.78,bevelEnabled:true,bevelSize:cover?.04:.025,bevelThickness:cover?.04:.02,bevelSegments:2,steps:1});geo.translate(0,0,cover?-4.025:-3.89);if(side<0){geo.scale(-1,1,1);const count=geo.attributes.position.count;const indices=[];for(let i=0;i<count;i+=3)indices.push(i,i+2,i+1);geo.setIndex(indices);geo.computeVertexNormals();}return geo;
 }
 export function OpenBook(){
  const pages=useMemo(()=>[leafGeometry(1),leafGeometry(-1)],[]);const covers=useMemo(()=>[leafGeometry(1,true),leafGeometry(-1,true)],[]);
