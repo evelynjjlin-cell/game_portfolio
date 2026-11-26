@@ -23,7 +23,7 @@ export function HingedWindow({room}:{room:RoomConfig}){
  const leaves=useRef<(THREE.Group|null)[]>([]);const shutters=useRef<(THREE.Group|null)[]>([]);const amount=useRef(0);
  useFrame((_,dt)=>{
   const s=useWorld.getState(),phase=s.phases[room.id];const target=phase==='opening'||phase==='open'?1:0;
-  amount.current=s.reducedMotion?target:THREE.MathUtils.clamp(amount.current+(target?1:-1)*Math.min(dt,.05)/room.animation.duration,0,1);
+  amount.current=s.reducedMotion?target:THREE.MathUtils.clamp(amount.current+(target?1:-1)*dt/room.animation.duration,0,1);
   const t=amount.current*amount.current*(3-2*amount.current);
   [-1,1].forEach((side,index)=>{const leaf=leaves.current[index],shutter=shutters.current[index];if(leaf)leaf.rotation.y=side*(.035+t*1.45);if(shutter)shutter.rotation.y=side*(.19+t*room.animation.angle);});
   if(amount.current===target&&(phase==='opening'||phase==='closing'))s.finish(room.id,target?'open':'idle');
