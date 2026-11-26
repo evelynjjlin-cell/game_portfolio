@@ -315,7 +315,9 @@ for side in [-1,1]:
  for z in [3.47,3.74,4.0]:box('Balcony return spindle',(x,4.27,z),(.06,.7,.06),wood,.018)
  # Brackets are smoothly curved profiles, visibly anchored to the wall.
  pts=[(0,0),(.75,0),(.65,-.10),(.42,-.2),(.24,-.36),(.13,-.6),(0,-.62)]
- ob=profile('Carved balcony console',pts,-.10,.10,wood,.04);ob.location=V((x,3.63,3.22));ob.rotation_euler=(M@Euler((0,-math.pi/2,0)).to_matrix()@M.transposed()).to_euler()
+ # The left console intersects the living-room arch; carry that end in the slab.
+ if side==1:
+  ob=profile('Carved balcony console',pts,-.10,.10,wood,.04);ob.location=V((x,3.63,3.22));ob.rotation_euler=(M@Euler((0,-math.pi/2,0)).to_matrix()@M.transposed()).to_euler()
 # Proper curved limestone steps connect the main entrance and book rather than floating slabs.
 def sector_step(cx,z,y,radius,front=True,height=.11):
  pts=[(cx,z)]+[(cx+radius*math.sin(-math.pi/2+j*math.pi/64),z+(1 if front else -1)*radius*math.cos(-math.pi/2+j*math.pi/64)) for j in range(65)]
