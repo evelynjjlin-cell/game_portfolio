@@ -106,10 +106,21 @@ for d in LAYOUT['aboutDoors']:
  x,y,z=d['position'];subtract(rear if d['back'] else front,archpoints(d['width']+.03,d['height']+.025,d['arch'],x,y),-3.6 if d['back'] else 2.75,-2.75 if d['back'] else 3.55)
 for ob in [front,rear]:
  bpy.context.view_layer.objects.active=ob;mod=ob.modifiers.new('Soft aperture edges','BEVEL');mod.width=.024;mod.segments=3;bpy.ops.object.modifier_apply(modifier=mod.name);uv_project(ob,.46);smooth(ob)
+# V035: true side-wall apertures, arranged in two domestic storeys and an attic.
+SIDE_WINDOWS=[(u,y,1.12,1.54,.30) for y in [2.36,5.15] for u in [-1.48,1.48]]
+def side_place(ob,side):
+ rot=M@Euler((0,side*math.pi/2,0)).to_matrix()@M.transposed()
+ ob.location=V((side*4.64,0,0))+rot@ob.location
+ ob.rotation_euler=(rot@ob.rotation_euler.to_matrix()).to_euler()
+ return ob
 for side in [-1,1]:
  pts=[(-3.23,BASE),(3.23,BASE),(3.23,EAVE),(0,RIDGE-.1),(-3.23,EAVE)]
- # Profile is authored in x/y and rotated around runtime Y into the side wall.
- ob=profile('Closed side wall',pts,-.16,.16,plaster,.025);ob.location=V((side*4.64,0,0));ob.rotation_euler=(M@Euler((0,math.pi/2,0)).to_matrix()@M.transposed()).to_euler()
+ ob=profile('Perforated side masonry',pts,-.16,.16,plaster,0)
+ for u,y,w,h,r in SIDE_WINDOWS:subtract(ob,archpoints(w,h,r,u,y),-.24,.24)
+ circle=[(.36*math.cos(i*2*math.pi/64),7.17+.36*math.sin(i*2*math.pi/64)) for i in range(64)]
+ subtract(ob,circle,-.24,.24)
+ bpy.context.view_layer.objects.active=ob;mod=ob.modifiers.new('Soft side aperture arris','BEVEL');mod.width=.014;mod.segments=3;bpy.ops.object.modifier_apply(modifier=mod.name)
+ uv_project(ob,.46);smooth(ob);side_place(ob,side)
 # Ground course, continuous cornice rhythm and shallow stone plinth.
 box('Limestone plinth',(0,.83,0),(9.82,.22,6.66),stone[1],.065)
 for s in [-1,1]:
@@ -362,17 +373,44 @@ def sector_step(cx,z,y,radius,front=True,height=.11):
 for j in range(3):sector_step(.48,3.17,.63+j*.095,1.89-j*.15,True,.12)
 for j in range(3):sector_step(0,-3.14,.63+j*.095,1.36-j*.13,False,.12)
 for j in range(2):box('Side entry threshold',(3.8,.71+j*.1,3.55-j*.14),(1.48-j*.13,.12,.66),stone[1],.04)
-# Minimal frosted side oculi: deliberately architectural, not additional inactive room entrances.
+# Recessed end-elevation casements: the opening, masonry reveal, timber sash,
+# glazing and sill occupy separate depths instead of being pasted onto a blank wall.
+casement=material('Forest green side casements','#455748','oak',.83)
+side_glass=material('Quiet blue green side glazing','#8eaaa7',None,.32,.12)
+reflection=material('Soft glazing reflection','#c8d4cc',None,.4,.02)
+def ring_profile(name,inner,outer,d0,d1,mat):
+ n=len(inner);vs=[(u,y,d) for d in [d0,d1] for pp in [inner,outer] for u,y in pp];fs=[]
+ for j in range(n):
+  k=(j+1)%n;fs.extend([(j,k,k+2*n,j+2*n),(j+n,j+3*n,k+3*n,k+n),(j,j+n,k+n,k),(j+2*n,k+2*n,k+3*n,j+3*n)])
+ return mesh(name,vs,fs,mat,.006)
 for side in [-1,1]:
- x=side*4.81;y=5.15;z=-.45
- vs=[];fs=[];N=48
- for radius in [.37,.29]:
-  for i in range(N):a=i*2*math.pi/N;vs.append((x,y+radius*math.sin(a),z+radius*math.cos(a)))
- for i in range(N):fs.append((i,(i+1)%N,(i+1)%N+N,i+N))
- mesh('Side oculus moulding',vs,fs,woodLight,.015)
- vs=[(x+side*.008,y,z)]+[(x+side*.008,y+.29*math.sin(i*2*math.pi/N),z+.29*math.cos(i*2*math.pi/N)) for i in range(N)]
- mesh('Side frosted pane',vs,[(0,i+1,(i+1)%N+1) for i in range(N)],shadow,0)
- beam('Oculus leaded bar',(x+side*.02,y-.27,z),(x+side*.02,y+.27,z),.025,.025,brass,.005)
+ for u,y,w,h,r in SIDE_WINDOWS:
+  inside=archpoints(w-.025,h-.025,r-.0125,u,y);outside=archpoints(w+.23,h+.23,r+.115,u,y)
+  side_place(ring_profile('Side stone reveal',inside,outside,-.055,.215,stone[1]),side)
+  inside=archpoints(w-.18,h-.18,r-.09,u,y);outside=archpoints(w-.01,h-.01,r-.005,u,y)
+  side_place(ring_profile('Recessed casement sash',inside,outside,-.065,.075,casement),side)
+  side_place(profile('Recessed side glazing',inside,-.025,-.019,side_glass,.002),side)
+  side_place(box('Casement mullion',(u,y-.035,.032),(.045,h-.16,.07),casement,.009),side)
+  side_place(box('Casement transom',(u,y+.035,.032),(w-.16,.04,.07),casement,.008),side)
+  side_place(box('Side stone sill',(u,y-h/2-.035,.17),(w+.36,.11,.43),stone[1],.022),side)
+  side_place(box('Side sill drip edge',(u,y-h/2-.095,.25),(w+.23,.025,.18),stone[0],.006),side)
+  # Restrained narrow reflected highlights emphasize recessed glass, without fake rooms.
+  for du in [-.32,.23]:side_place(box('Side pane reflected light',(u+du,y-.22,-.009),(.025,.50,.006),reflection,.002),side)
+ # Oculus is in the attic, cut into the gable and deeply framed with a real reveal.
+ for ri,ro,d0,d1,mat in [(.355,.49,-.04,.215,stone[1]),(.285,.355,-.055,.07,casement)]:
+  inner=[(ri*math.cos(i*2*math.pi/64),7.17+ri*math.sin(i*2*math.pi/64)) for i in range(64)]
+  outer=[(ro*math.cos(i*2*math.pi/64),7.17+ro*math.sin(i*2*math.pi/64)) for i in range(64)]
+  side_place(ring_profile('Recessed attic oculus',inner,outer,d0,d1,mat),side)
+ circle=[(.286*math.cos(i*2*math.pi/64),7.17+.286*math.sin(i*2*math.pi/64)) for i in range(64)]
+ side_place(profile('Attic glazing',circle,-.025,-.019,side_glass,.002),side)
+ side_place(box('Attic central mullion',(0,7.17,.032),(.035,.56,.06),casement,.006),side)
+ side_place(box('Attic crossbar',(0,7.17,.032),(.56,.035,.06),casement,.006),side)
+ # The floor course ties both facade returns to the same storey datum.
+ side_place(box('End elevation string course',(0,3.69,.17),(6.48,.105,.12),stone[1],.016),side)
+ side_place(box('End gable tie beam',(0,6.53,.185),(6.22,.105,.09),wood,.014),side)
+ side_place(beam('End gable king post',(0,7.70,.185),(0,8.12,.185),.10,.09,wood,.014),side)
+ for direction in [-1,1]:
+  side_place(beam('End gable rake trim',(direction*3.03,6.58,.185),(0,8.12,.185),.095,.09,wood,.014),side)
 # Consolidate static draw calls by material. Applied transforms preserve world-space openings.
 for ob in list(bpy.context.scene.objects):
  if ob.type!='MESH':continue

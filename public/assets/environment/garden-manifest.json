@@ -1,6 +1,6 @@
 {
   "file": "garden.glb",
-  "triangles": 55930,
+  "triangles": 48998,
   "meshes": 16,
   "materials": 16,
   "imported_source": "Poly Haven Potted Plant 02 \u2014 Rico Cilliers, CC0; existing normalized derivative",
@@ -25,8 +25,5 @@
       4.33
     ]
   ],
-  "bytes_before_texture_packing": 2543708,
-  "bytes": 1105524,
-  "sha256": "5dc6e02aa519eb72f7748594ce91dc3ac6be3f611eaea9e4d0bd7922c7f90a76",
-  "deliveryCompression": "EXT_meshopt_compression"
+  "bytes_before_texture_packing": 2346336
 }

@@ -231,11 +231,8 @@ def ivy_vine(anchor, height, side_wall=False, direction=-1, spread=.15):
         leaf(end,orientation,.17+RNG.random()*.055,.16,leaf_dark if i%3 else leaf_light,True)
 
 
-# Ivy occupies narrow solid piers and side walls; all eight apertures remain clear.
-for x,sign in [(-4.84,-1),(4.84,1)]:
-    for z,top,length in [(-1.7,4.4,2.3),(.3,5.1,2.8)]:
-        ivy_vine((x,top,z),length,True,sign,.12)
-        ivy_vine((x,top-.35,z+.16),length*.67,True,sign,.09)
+# V035: side windows and masonry articulate the end elevations; no masking ivy.
+# Keep only the restrained existing accents on the solid front and rear piers.
 for x in [-.72,-.47]:
     ivy_vine((x,6.28,3.252),1.95,False,1,.09)
 for x in [-.18,.12]:
