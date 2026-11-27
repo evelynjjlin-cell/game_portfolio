@@ -122,12 +122,19 @@ for s in [-1,1]:
  # Floor belt only on actual piers; deliberately avoids all arched crowns.
  for a,b in ([(-4.8,-4.66),(-1.68,-1.28),(2.16,3.08),(4.5,4.8)] if s>0 else [(-4.8,-4.2),(-1.1,1.1),(4.2,4.8)]):
   box('Floor string course',((a+b)/2,3.69,s*3.25),(b-a,.13,.14),stone[1],.025)
-# Beveled quoins at four corners, with alternating return lengths.
+# V035: slim continuous dressed-stone corner returns, embedded in the plaster.
+# Each course is a connected L profile; a hairline joint replaces alternating toy blocks.
+# The outer arris projects only 0.035 beyond the finished wall on either elevation.
 for sx in [-1,1]:
  for sz in [-1,1]:
-  for row in range(15):
-   y=1.12+row*.36
-   box('Limestone corner quoin',(sx*4.71,y,sz*3.16),(.33 if row%2 else .53,.338,.52 if row%2 else .32),stone[row%3],.025)
+  low,high=.94,6.50;courses=12;pitch=(high-low)/courses
+  for row in range(courses):
+   y0=low+row*pitch+.004;y1=low+(row+1)*pitch-.004
+   plan=[(4.50,3.205),(4.775,3.205),(4.775,2.93),(4.835,2.93),(4.835,3.265),(4.50,3.265)]
+   pts=[(sx*x,sz*z) for x,z in plan];n=len(pts)
+   vs=[(x,y,z) for y in [y0,y1] for x,z in pts]
+   fs=[tuple(range(n-1,-1,-1)),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)]
+   mesh('Flush limestone corner return',vs,fs,stone[1],.007)
 # Integrated arch masonry: detailed wedge voussoirs and consistent jamb stones.
 def surround(x,y,z,w,h,rise,back=False):
  sign=-1 if back else 1;ri=w/2+.028;ro=ri+.18;spring=y+h/2-rise

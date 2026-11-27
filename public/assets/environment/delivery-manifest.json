@@ -18,8 +18,8 @@
     },
     {
       "path": "assets/environment/house-shell.glb",
-      "bytes": 3718608,
-      "sha256": "5962eaee8c4399161348ea3cc5c42fe1577f1f8e359ceb723776776c75dc8656",
+      "bytes": 3756708,
+      "sha256": "787ab09c811f0861599cdf9ce29d5477783da9d7759fdde182737bbaceb6a8a6",
       "meshopt": true,
       "materials": 17,
       "primitives": 17
@@ -169,5 +169,5 @@
       "primitives": 20
     }
   ],
-  "totalBytes": 23487120
+  "totalBytes": 23525220
 }
