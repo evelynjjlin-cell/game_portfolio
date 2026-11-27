@@ -56,7 +56,7 @@ def material(name, color, rough=.8, metal=0, texture=None, normal=None):
     return mat
 
 
-wood = material("Garden · oiled walnut",(.44,.255,.12),.68,normal="oak-normal.jpg")
+wood = material("Garden · oiled walnut",(.30,.21,.13),.83,normal="oak-normal.jpg")
 cloth = material("Garden · woven oat linen",(.70,.60,.43),.96,normal="bookcloth-normal.jpg")
 clay = material("Garden · warm terracotta",(.37,.20,.115),.9,normal="plaster-normal.jpg")
 soil = material("Garden · rich potting soil",(.075,.055,.024),1)
@@ -67,8 +67,8 @@ leaf_light = material("Garden · olive leaf variation",(.17,.23,.058),.9)
 petal_cream = material("Garden · ivory hydrangea petals",(.88,.84,.64),.94)
 petal_pink = material("Garden · pale blush hydrangea petals",(.67,.48,.42),.96)
 flower_center = material("Garden · ochre flower stamens",(.45,.31,.08),.92)
-moss = material("Garden · irregular moss islands",(.13,.155,.036),1)
-grass = material("Garden · straw green blades",(.22,.25,.06),.94)
+moss = material("Garden · irregular moss islands",(.075,.12,.055),1)
+grass = material("Garden · straw green blades",(.11,.17,.07),.96)
 brass = material("Garden · aged brass details",(.43,.27,.10),.4,.7)
 
 
@@ -257,7 +257,8 @@ def ground_patch(cx,cz,rx,rz,seed):
             for q in range(4):petal((x,y+.045,z),(math.cos(q*math.pi/2),0,math.sin(q*math.pi/2)),(0,1,0),.022,petal_cream)
 
 
-for i,args in enumerate([(-5.7,-3.5,.62,.72),(-5.72,-1.6,.58,.8),(-5.8,.45,.6,.8),(5.25,-2.55,.36,1.75),(5.4,.55,.30,1.45),(5.8,1.95,.16,.22),(-3.8,4.64,.78,.26),(4.62,4.62,.56,.28),(-4.6,-4.72,.55,.24),(4.6,-4.72,.55,.24)]):
+# Two restrained planted edge strips frame the side paving; no scattered side islands.
+for i,args in enumerate([(-5.90,-.85,.22,1.85),(5.90,-.35,.20,2.0),(-3.8,4.64,.58,.18),(4.62,4.62,.40,.18),(-4.6,-4.72,.40,.18),(4.6,-4.72,.40,.18)]):
     ground_patch(*args,150+i)
 
 
@@ -272,9 +273,15 @@ def paver(x,z,rx,rz,top=None,seed=0):
     batch(stone).add(verts,faces,False)
 
 
-# Small stepping stones expose generous paper between individual garden islands.
-for i,(x,z) in enumerate([(-5.7,-2.55),(-5.8,-.55),(-5.9,1.32),(5.7,-2.65),(5.7,-.78),(5.78,1.18),(5.4,2.82)]):
-    paver(x,z,.27,.21,seed=30+i)
+# Continuous chamfered limestone paving follows the book surface beside each wall.
+# Courses stop at the existing terrace / front entrance zones.
+for sign in [-1,1]:
+    for row in range(11 if sign<0 else 13):
+        cx=sign*5.30;cz=-2.90+row*.44;rx=.36;rz=.215;c=.035
+        outline=[(-rx+c,-rz),(rx-c,-rz),(rx,-rz+c),(rx,rz-c),(rx-c,rz),(-rx+c,rz),(-rx,rz-c),(-rx,-rz+c)]
+        verts=[(cx+x,surface(cx+x,cz+z)+dy,cz+z) for dy in [.015,.075] for x,z in outline]
+        faces=[tuple(reversed(range(8))),tuple(range(8,16))]+[(j,(j+1)%8,(j+1)%8+8,j+8) for j in range(8)]
+        batch(stone).add(verts,faces,False)
 
 
 # The book's outer page is lower here. A thin, irregular paved terrace follows it

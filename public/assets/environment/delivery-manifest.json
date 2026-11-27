@@ -10,16 +10,16 @@
     },
     {
       "path": "assets/environment/garden.glb",
-      "bytes": 1021624,
-      "sha256": "445445709806f307d25fcae13b41fab0e2bd6dc80d6607be9d18f0a234240b8c",
+      "bytes": 998204,
+      "sha256": "29471762680a119151f3df47a3fcf1d3047774cee1fa317cb2b20e05cedcbc1a",
       "meshopt": true,
       "materials": 16,
       "primitives": 16
     },
     {
       "path": "assets/environment/house-shell.glb",
-      "bytes": 4716112,
-      "sha256": "dad6360ab179cac87b0b2d7f637ea0b9261edd987a7156aabb7e8605be7482ba",
+      "bytes": 4723276,
+      "sha256": "d089254b1a5140f0dc629528f0c228451cf4ca74ffda0f225966e3a9113e5aaf",
       "meshopt": true,
       "materials": 18,
       "primitives": 18
@@ -169,5 +169,5 @@
       "primitives": 20
     }
   ],
-  "totalBytes": 24400724
+  "totalBytes": 24384468
 }

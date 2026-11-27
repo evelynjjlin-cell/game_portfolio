@@ -34,13 +34,13 @@ def material(name,color,texture=None,rough=.8,metal=0):
  m.diffuse_color=rgb(color);m['base_color_factor']=color
  return m
 plaster=material('Ivory lime plaster','#e7dbc4','plaster',.96)
-stone=[material('Honed limestone '+str(i),c,'stone',.92) for i,c in enumerate(['#cdbb9c','#dbccb0','#c4b397'])]
-wood=material('Warm walnut joinery','#805434','oak',.76)
-woodLight=material('Worn oak edge','#aa7c4f','oak',.82)
-woodDark=material('Walnut end grain','#503622','oak',.86)
-slates=[material('Forest slate '+str(i),c,'slate',.88) for i,c in enumerate(['#344a35','#3e533b','#40543d','#374a36','#42543c'])]
+stone=[material('Honed limestone '+str(i),c,'stone',.92) for i,c in enumerate(['#ccbea4','#d9cdb5','#c8bba2'])]
+wood=material('Warm walnut joinery','#785b40','oak',.82)
+woodLight=material('Worn oak edge','#a08360','oak',.86)
+woodDark=material('Walnut end grain','#503f2e','oak',.89)
+slates=[material('Forest slate '+str(i),c,'slate',.88) for i,c in enumerate(['#304637','#384e3d','#3c5140','#344a3a','#3e5241'])]
 brass=material('Muted brass','#a78547',None,.42,.7)
-bronze=material('Bronze conservatory','#665e3c','oak',.57,.3)
+bronze=material('Bronze conservatory','#53604b',None,.72,.22)
 lead=material('Dark bronze flashing','#48513c',None,.66,.35)
 glass=material('Conservatory glass','#d6e0d7',None,.14,.05);p=glass.node_tree.nodes.get('Principled BSDF');p.inputs['Alpha'].default_value=.13;glass.surface_render_method='DITHERED';glass.diffuse_color=(*rgb('#d6e0d7')[:3],.13)
 shadow=material('Recessed glazing','#403d32',None,.5)
@@ -298,6 +298,11 @@ def ridge(name,a,b):
   for j in range(16):faces.extend([(j,j+1,j+35,j+34),(j+17,j+51,j+52,j+18),(j,j+17,j+18,j+1),(j+34,j+35,j+52,j+51)])
   faces +=[(0,34,51,17),(16,33,67,50)]
   mesh(name,vertices,faces,slates[k%3],.004)
+# A concealed slate bedding strip seals the daylight slit beneath the barrel caps.
+box('Main ridge bedding',(0,RIDGE+.06,0),(10.36,.14,.26),slates[0],.015)
+for c,hw,peak in GABLES:
+ start=max(0,(RIDGE-peak)/K);end=D+.13
+ box('Gable ridge bedding',(c,peak+.065,(start+end)/2),(.26,.14,end-start),slates[0],.015)
 ridge('Main curved ridge',(-5.18,RIDGE+.07,0),(5.18,RIDGE+.07,0))
 for c,hw,peak in GABLES:ridge('Gable curved ridge',(c,peak+.085,max(0,(RIDGE-peak)/K)),(c,peak+.085,D+.13))
 # Quiet stone chimney with recessed mortar joints, sloped cap and clay flues.
@@ -375,7 +380,7 @@ for j in range(3):sector_step(0,-3.14,.63+j*.095,1.36-j*.13,False,.12)
 for j in range(2):box('Side entry threshold',(3.8,.71+j*.1,3.55-j*.14),(1.48-j*.13,.12,.66),stone[1],.04)
 # Recessed end-elevation casements: the opening, masonry reveal, timber sash,
 # glazing and sill occupy separate depths instead of being pasted onto a blank wall.
-casement=material('Forest green side casements','#455748','oak',.83)
+casement=material('Forest green side casements','#405644','oak',.85)
 side_glass=material('Quiet blue green side glazing','#8eaaa7',None,.32,.12)
 reflection=material('Soft glazing reflection','#c8d4cc',None,.4,.02)
 def ring_profile(name,inner,outer,d0,d1,mat):
