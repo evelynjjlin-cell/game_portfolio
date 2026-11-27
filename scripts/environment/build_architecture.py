@@ -118,10 +118,14 @@ for s in [-1,1]:
   # Base course omitted at entrances: no raised blocks across thresholds.
   opens=[r for r in LAYOUT['rooms'] if r['facade']==('front' if s>0 else 'back') and r['floor']<1]+[dict(d,position=d['position']) for d in LAYOUT['aboutDoors'] if d['back']==(s<0)]
   if any(abs(x-r['position'][0])<r['width']/2+.08 for r in opens):continue
-  box('Dressed footing',(x,1.08,s*3.245),(.332,.33,.12),stone[i%3],.022)
+  box('Dressed footing',(x,1.08,s*3.235),(.338,.29,.09),stone[1],.012)
  # Floor belt only on actual piers; deliberately avoids all arched crowns.
  for a,b in ([(-4.8,-4.66),(-1.68,-1.28),(2.16,3.08),(4.5,4.8)] if s>0 else [(-4.8,-4.2),(-1.1,1.1),(4.2,4.8)]):
   box('Floor string course',((a+b)/2,3.69,s*3.25),(b-a,.13,.14),stone[1],.025)
+# The dressed plinth turns continuously onto the end elevations.
+for side in [-1,1]:
+ box('Side limestone water table',(side*4.80,1.08,0),(.12,.29,6.46),stone[1],.018)
+ box('Side plinth weathering',(side*4.815,1.25,0),(.16,.05,6.47),stone[1],.012)
 # V035: slim continuous dressed-stone corner returns, embedded in the plaster.
 # Each course is a connected L profile; a hairline joint replaces alternating toy blocks.
 # The outer arris projects only 0.035 beyond the finished wall on either elevation.
@@ -138,14 +142,22 @@ for sx in [-1,1]:
 # Integrated arch masonry: detailed wedge voussoirs and consistent jamb stones.
 def surround(x,y,z,w,h,rise,back=False):
  sign=-1 if back else 1;ri=w/2+.028;ro=ri+.18;spring=y+h/2-rise
+ # Continuous dressed reveal goes back into the full wall thickness.
+ inner=archpoints(w+.008,h+.008,rise+.004,x,y)
+ outer=archpoints(w+.09,h+.09,rise+.045,x,y)
+ n=len(inner);vs=[(px,py,zz) for zz in [z-sign*.22,z+sign*.025] for pts in [inner,outer] for px,py in pts]
+ fs=[]
+ for j in range(n):
+  k=(j+1)%n;fs.extend([(j,k,k+2*n,j+2*n),(j+n,j+3*n,k+3*n,k+n),(j,j+n,k+n,k),(j+2*n,k+2*n,k+3*n,j+3*n)])
+ mesh('Continuous recessed opening reveal',vs,fs,stone[1],.005)
  for i in range(15):
-  a=i*math.pi/15+.006;b=(i+1)*math.pi/15-.006
+  a=i*math.pi/15+.0025;b=(i+1)*math.pi/15-.0025
   pts=[(x+ri*math.cos(a+(b-a)*j/4),spring+(rise+.028)*math.sin(a+(b-a)*j/4)) for j in range(5)]
   pts +=[(x+ro*math.cos(b-(b-a)*j/4),spring+(rise+.208)*math.sin(b-(b-a)*j/4)) for j in range(5)]
-  profile('Arch voussoir',pts,z+sign*.015,z+sign*(.15+(.018 if i==7 else 0)),stone[(i+1)%3],.014)
+  profile('Arch voussoir',pts,z+sign*.015,z+sign*(.105+(.012 if i==7 else 0)),stone[1],.009)
  jh=h-rise;nr=max(3,round(jh/.32))
  for side in [-1,1]:
-  for j in range(nr):box('Arch jamb block',(x+side*(w/2+.118),y-h/2+jh*(j+.5)/nr,z+sign*.07),(.18,jh/nr-.015,.18),stone[(j+1)%3],.015)
+  for j in range(nr):box('Arch jamb block',(x+side*(w/2+.118),y-h/2+jh*(j+.5)/nr,z+sign*.045),(.18,jh/nr-.008,.14),stone[1],.009)
  # Deep stepped limestone sill with a drip groove visually separated below.
  box('Honed sill',(x,y-h/2-.04,z+sign*.05),(w+.47,.12,.44),stone[1],.035)
  box('Sill drip edge',(x,y-h/2-.105,z+sign*.11),(w+.37,.036,.35),stone[0],.012)
@@ -244,6 +256,16 @@ for side in [-1,1]:
   box('Eave cornice',((xa+xb)/2,6.39,side*(D+.015)),(xb-xa,.18,.18),wood,.04)
   box('Eave moulded fillet',((xa+xb)/2,6.46,side*(D+.06)),(xb-xa,.045,.06),woodLight,.012)
  for sx in [-1,1]:beam('Side roof fascia',(sx*5.19,6.38,side*D),(sx*5.19,RIDGE,0),.16,.18,wood,.028)
+# Closed sloping soffit returns bridge each end wall to its bargeboard.
+for sx in [-1,1]:
+ for sz in [-1,1]:
+  z0,z1=0,sz*D
+  vs=[(x,main_y(z)-.105,z) for x in [sx*4.77,sx*5.20] for z in [z0,z1]]
+  mesh('Closed side oak soffit',vs,[(0,1,3,2)],woodDark,0)
+  beam('Side soffit wall fillet',(sx*4.81,main_y(0)-.12,0),(sx*4.81,main_y(z1)-.12,z1),.065,.085,wood,.012)
+for xa,xb in [(-5.18,-4.66),(-.74,-.23),(4.33,5.18)]:
+ box('Front eave soffit',((xa+xb)/2,6.44,3.43),(xb-xa,.07,.47),woodDark,.01)
+box('Rear eave soffit',(0,6.44,-3.43),(10.36,.07,.47),woodDark,.01)
 # Curved barrel ridge tiles, source lathe profile shared across all ridge segments.
 def cylinder(name,pos,radius,depth,mat,verts=32,rot=(0,0,0)):
  bpy.ops.mesh.primitive_cylinder_add(vertices=verts,radius=radius,depth=depth,location=V(pos));o=bpy.context.object;o.name=name;o.rotation_euler=(M@Euler(rot,'XYZ').to_matrix()@M.transposed()).to_euler();o.data.materials.append(mat);uv_project(o);smooth(o);return o
@@ -269,11 +291,13 @@ ridge('Main curved ridge',(-5.18,RIDGE+.07,0),(5.18,RIDGE+.07,0))
 for c,hw,peak in GABLES:ridge('Gable curved ridge',(c,peak+.085,max(0,(RIDGE-peak)/K)),(c,peak+.085,D+.13))
 # Quiet stone chimney with recessed mortar joints, sloped cap and clay flues.
 cx,cz=-3.6,-.7
+box('Solid chimney masonry core',(cx,8.15,cz),(.79,2.55,.76),stone[1],.015)
 for row in range(9):
  y=7.05+row*.27
  for side in [-1,1]:
-  for col in range(3):box('Chimney sandstone',(cx+(col-1)*.25,y,cz+side*.31),(.235,.25,.2),stone[(row+col)%3],.025)
- for side in [-1,1]:box('Chimney return',(cx+side*.34,y,cz),(.18,.25,.42),stone[(row+1)%3],.024)
+  for col in range(3):box('Chimney sandstone',(cx+(col-1)*.25,y,cz+side*.31),(.245,.262,.16),stone[1],.009)
+ for side in [-1,1]:box('Chimney return',(cx+side*.34,y,cz),(.14,.262,.46),stone[1],.009)
+box('Chimney cap drip course',(cx,9.16,cz),(.88,.06,.80),stone[0],.015)
 box('Chimney weathered cap',(cx,9.3,cz),(1.02,.19,.93),stone[1],.05)
 for dx in [-.21,.21]:
  cylinder('Clay chimney pot',(cx+dx,9.53,cz),.14,.42,woodDark,32)
@@ -281,11 +305,14 @@ for dx in [-.21,.21]:
 # Fine copper gutters/downpipes and properly attached brackets.
 for sx in [-1,1]:
  for sz in [-1,1]:
-  x=sx*4.9;z=sz*3.27
+  x=sx*4.86;z=sz*2.84
   beam('Copper downpipe',(x,1.0,z),(x,6.35,z),.065,.065,brass,.025)
-  for y in [1.3,2.9,4.5,6.0]:box('Pipe bracket',(x,y,z),(.12,.05,.13),woodDark,.012)
+  beam('Downpipe swan neck',(x,6.35,z),(x,6.45,sz*3.59),.065,.065,brass,.02)
+  for y in [1.3,2.9,4.5,6.0]:box('Pipe bracket',(x,y,z),(.10,.035,.10),lead,.008)
 # Conservatory is an attached glazed extension with actual continuous structural joints.
 left,right=-4.76,-1.74;zback,zfront=3.13,4.1;yfront,yback=3.55,3.7
+box('Conservatory wall ledger',(-3.25,3.72,3.245),(3.17,.12,.14),bronze,.018)
+box('Conservatory wall flashing',(-3.25,3.81,3.26),(3.22,.045,.21),lead,.01)
 box('Conservatory stone curb',(-3.25,.9,3.62),(3.12,.16,1.23),stone[1],.045)
 for x in [left,right]:
  for z in [zback,(zback+zfront)/2,zfront]:
@@ -301,6 +328,8 @@ mesh('Conservatory roof glass',[(left,yback-.016,zback),(right,yback-.016,zback)
 # Balcony: dressed slab, real turned balusters, curved brackets and oak handrail.
 bx=2.05;bwidth=3.65;bfront=4.25;bback=3.18;floor=3.77
 box('Balcony limestone slab',(bx,3.71,(bfront+bback)/2),(bwidth,.12,bfront-bback+.12),stone[1],.045)
+box('Balcony stone drip fascia',(bx,3.665,bfront+.04),(bwidth-.03,.055,.09),stone[0],.014)
+for side in [-1,1]:box('Balcony slab return drip',(bx+side*(bwidth/2-.02),3.665,(bfront+bback)/2),(.07,.055,bfront-bback),stone[0],.014)
 box('Balcony floorboard deck',(bx,3.79,(bfront+bback)/2),(bwidth-.12,.055,bfront-bback),woodLight,.02)
 for j in range(14):
  x=bx-bwidth/2+.13+j*(bwidth-.26)/13

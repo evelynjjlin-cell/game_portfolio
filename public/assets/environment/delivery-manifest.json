@@ -18,11 +18,11 @@
     },
     {
       "path": "assets/environment/house-shell.glb",
-      "bytes": 3756708,
-      "sha256": "787ab09c811f0861599cdf9ce29d5477783da9d7759fdde182737bbaceb6a8a6",
+      "bytes": 4005008,
+      "sha256": "93a4b43a837c476bba5a15d6620154241b10c9b559e5376380a78d7495351169",
       "meshopt": true,
-      "materials": 17,
-      "primitives": 17
+      "materials": 16,
+      "primitives": 16
     },
     {
       "path": "assets/environment/joinery/about-back.glb",
@@ -169,5 +169,5 @@
       "primitives": 20
     }
   ],
-  "totalBytes": 23525220
+  "totalBytes": 23773520
 }
